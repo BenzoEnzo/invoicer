@@ -1,8 +1,8 @@
-package com.chronica.invoicer.invoice.entity;
+package com.chronica.invoicer.invoice.archival;
 
 import com.chronica.invoicer.company.archival.ArchivalCompany;
-import com.chronica.invoicer.core.BaseEntity;
-import com.chronica.invoicer.invoice.archival.ArchivalInvoice;
+import com.chronica.invoicer.core.ArchivalEntity;
+import com.chronica.invoicer.invoice.entity.Invoice;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Invoice implements BaseEntity {
+public class ArchivalInvoice extends ArchivalEntity<Invoice> {
     private Long id;
     private String symbol;
     private Date creationDate;
@@ -23,6 +23,6 @@ public class Invoice implements BaseEntity {
     private Date paymentDate;
     private ArchivalCompany seller;
     private ArchivalCompany customer;
-    private List<ArchivalInvoice> invoiceItems;
-    private InvoicePrice price;
+    private List<ArchivalInvoiceItem> invoiceItems;
+    private ArchivalInvoicePrice price;
 }

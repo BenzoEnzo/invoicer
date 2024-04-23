@@ -1,6 +1,7 @@
-package com.chronica.invoicer.invoice.entity;
+package com.chronica.invoicer.invoice.archival;
 
-import com.chronica.invoicer.core.BaseEntity;
+import com.chronica.invoicer.core.ArchivalEntity;
+import com.chronica.invoicer.invoice.entity.InvoiceItem;
 import com.chronica.invoicer.product.entity.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,9 +12,9 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class InvoiceItem implements BaseEntity {
+@NoArgsConstructor
+public class ArchivalInvoiceItem extends ArchivalEntity<InvoiceItem> {
     private Long id;
     private Integer invoicePosition;
     private BigDecimal quantity;

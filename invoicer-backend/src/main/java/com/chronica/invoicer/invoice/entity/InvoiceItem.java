@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class InvoiceItem implements BaseEntity {
     private Long id;
+    private Integer invoicePosition;
     private BigDecimal quantity;
     private BigDecimal discount;
     private Product product;

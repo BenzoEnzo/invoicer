@@ -1,7 +1,8 @@
 package com.chronica.invoicer.invoice.entity;
 
-import com.chronica.invoicer.company.entity.Company;
+import com.chronica.invoicer.company.archival.ArchivalCompany;
 import com.chronica.invoicer.core.BaseEntity;
+import com.chronica.invoicer.invoice.archival.ArchivalInvoice;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,8 +21,8 @@ public class Invoice implements BaseEntity {
     private Date creationDate;
     private Date saleDate;
     private Date paymentDate;
-    private Company seller;
-    private Company customer;
-    private List<InvoiceItem> invoiceItems;
+    private ArchivalCompany seller;
+    private ArchivalCompany customer;
+    private List<ArchivalInvoice> invoiceItems;
     private InvoicePrice price;
 }

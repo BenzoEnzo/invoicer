@@ -1,10 +1,8 @@
 package com.chronica.invoicer.invoice.archival;
 
-import com.chronica.invoicer.company.entity.Company;
+import com.chronica.invoicer.company.archival.ArchivalCompany;
 import com.chronica.invoicer.core.ArchivalEntity;
 import com.chronica.invoicer.invoice.entity.Invoice;
-import com.chronica.invoicer.invoice.entity.InvoiceItem;
-import com.chronica.invoicer.invoice.entity.InvoicePrice;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,8 +21,8 @@ public class ArchivalInvoice extends ArchivalEntity<Invoice> {
     private Date creationDate;
     private Date saleDate;
     private Date paymentDate;
-    private Company seller;
-    private Company customer;
-    private List<InvoiceItem> invoiceItems;
-    private InvoicePrice price;
+    private ArchivalCompany seller;
+    private ArchivalCompany customer;
+    private List<ArchivalInvoiceItem> invoiceItems;
+    private ArchivalInvoicePrice price;
 }

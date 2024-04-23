@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class ArchivalInvoiceItem extends ArchivalEntity<InvoiceItem> {
     private Long id;
+    private Integer invoicePosition;
     private BigDecimal quantity;
     private BigDecimal discount;
     private Product product;

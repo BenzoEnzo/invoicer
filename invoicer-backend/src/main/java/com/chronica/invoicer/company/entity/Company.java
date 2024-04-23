@@ -1,5 +1,6 @@
 package com.chronica.invoicer.company.entity;
 
+import com.chronica.invoicer.core.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Company {
+public class Company implements BaseEntity {
     private Long id;
     private String name;
     private String shortName;

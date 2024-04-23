@@ -1,6 +1,7 @@
 package com.chronica.invoicer.product.entity;
 
 import com.chronica.invoicer.company.entity.Company;
+import com.chronica.invoicer.core.BaseEntity;
 import com.chronica.invoicer.invoice.enumerated.Unit;
 import com.chronica.invoicer.product.enumerated.TaxRate;
 import lombok.AllArgsConstructor;
@@ -14,7 +15,7 @@ import java.math.BigDecimal;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product {
+public class Product implements BaseEntity {
     private Long id;
     private Company seller;
     private String name;

@@ -1,5 +1,6 @@
 package com.chronica.invoicer.invoice.entity;
 
+import com.chronica.invoicer.core.BaseEntity;
 import com.chronica.invoicer.product.entity.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +13,7 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class InvoiceItem {
+public class InvoiceItem implements BaseEntity {
     private Long id;
     private BigDecimal quantity;
     private BigDecimal discount;

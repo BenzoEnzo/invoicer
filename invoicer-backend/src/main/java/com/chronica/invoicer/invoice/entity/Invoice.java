@@ -1,6 +1,7 @@
 package com.chronica.invoicer.invoice.entity;
 
 import com.chronica.invoicer.company.entity.Company;
+import com.chronica.invoicer.core.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Invoice {
+public class Invoice implements BaseEntity {
     private Long id;
     private String symbol;
     private Date creationDate;

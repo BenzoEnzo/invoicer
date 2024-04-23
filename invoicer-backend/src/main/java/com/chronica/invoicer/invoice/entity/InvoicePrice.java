@@ -1,5 +1,6 @@
 package com.chronica.invoicer.invoice.entity;
 
+import com.chronica.invoicer.core.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,8 @@ import java.math.BigDecimal;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class InvoicePrice {
+public class InvoicePrice implements BaseEntity {
+    private Long id;
     private BigDecimal netAmount;
     private BigDecimal vatAmount;
     private BigDecimal brutAmount;

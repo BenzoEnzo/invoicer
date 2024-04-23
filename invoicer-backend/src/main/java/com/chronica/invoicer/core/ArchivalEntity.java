@@ -14,4 +14,5 @@ import java.util.Date;
 public abstract class ArchivalEntity<T extends BaseEntity> {
     private T realEntity;
     private Date createdAt;
+    private Integer version;
 }

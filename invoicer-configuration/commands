@@ -1,0 +1,7 @@
+sudo docker-compose up -d
+sudo docker stop $(sudo docker ps -aq)
+sudo docker ps
+sudo docker inspect invoicer-configuration_invoicer-db-001_1
+docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' invoicer-configuration_invoicer-db-001_1
+
+sudo mysql -h 172.22.0.2 -u cfill -p

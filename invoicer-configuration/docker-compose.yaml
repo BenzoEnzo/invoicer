@@ -1,0 +1,19 @@
+version: '3.1'
+
+services:
+  invoicer-db-001:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 'ue2024'
+      MYSQL_DATABASE: 'invoicer'
+      MYSQL_USER: 'cfill'
+      MYSQL_PASSWORD: 'cfill'
+    ports:
+      - "7772:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
+

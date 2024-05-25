@@ -4,6 +4,7 @@ import com.chronica.invoicer.company.entity.Company;
 import com.chronica.invoicer.core.BaseEntity;
 import com.chronica.invoicer.invoice.enumerated.Unit;
 import com.chronica.invoicer.product.enumerated.TaxRate;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,8 +16,13 @@ import java.math.BigDecimal;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class Product implements BaseEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "seller_id")
     private Company seller;
     private String name;
     private String symbol;

@@ -2,6 +2,7 @@ package com.chronica.invoicer.product.entity;
 
 import com.chronica.invoicer.company.entity.Company;
 import com.chronica.invoicer.core.BaseEntity;
+import com.chronica.invoicer.invoice.entity.Invoice;
 import com.chronica.invoicer.invoice.enumerated.Unit;
 import com.chronica.invoicer.product.enumerated.TaxRate;
 import jakarta.persistence.*;
@@ -21,9 +22,6 @@ public class Product implements BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seller_id")
-    private Company seller;
     private String name;
     private String symbol;
     private Integer catalogNumber;

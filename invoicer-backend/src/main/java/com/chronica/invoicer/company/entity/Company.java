@@ -1,6 +1,7 @@
 package com.chronica.invoicer.company.entity;
 
 import com.chronica.invoicer.core.BaseEntity;
+import com.chronica.invoicer.invoice.entity.Invoice;
 import com.chronica.invoicer.product.entity.Product;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,7 +29,4 @@ public class Company implements BaseEntity {
     private String zipCode;
     private String city;
     private Integer nip;
-
-    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Product> products = new HashSet<>();
 }

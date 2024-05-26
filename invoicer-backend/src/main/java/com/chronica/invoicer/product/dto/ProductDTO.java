@@ -16,7 +16,6 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductDTO extends EntityDTO {
-    private Company seller;
     private String name;
     private String symbol;
     private Integer catalogNumber;

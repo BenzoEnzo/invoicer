@@ -1,4 +1,4 @@
-package com.chronica.invoicer.company.logic;
+package com.chronica.invoicer.logic.repository;
 
 import com.chronica.invoicer.company.entity.Company;
 import org.springframework.data.jpa.repository.JpaRepository;

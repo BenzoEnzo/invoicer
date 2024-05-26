@@ -1,0 +1,167 @@
+{
+	"info": {
+		"_postman_id": "4ffad41a-2760-40b0-bdc3-c786e5be4ad9",
+		"name": "Invoicer-REST-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18656948"
+	},
+	"item": [
+		{
+			"name": "Create products",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Produkt testowy\",\r\n  \"symbol\": \"4MMC\",\r\n  \"catalogNumber\": 1,\r\n  \"netPrice\": 10,\r\n  \"unit\": \"GRAM\",\r\n  \"taxRate\": \"TAX_RATE_23\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create products[2]",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create companies",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Ue2024\",\r\n  \"shortName\": \"ue\",\r\n  \"street\": \"compton\",\r\n  \"building\": 1,\r\n  \"apartment\": 1,\r\n  \"zipCode\": \"44\",\r\n  \"city\": \"23\",\r\n  \"nip\": 1111\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/companies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"companies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create companies[2]",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Ue2025\",\r\n  \"shortName\": \"ue2\",\r\n  \"street\": \"xd\",\r\n  \"building\": 2,\r\n  \"apartment\": 3,\r\n  \"zipCode\": \"45\",\r\n  \"city\": \"24\",\r\n  \"nip\": 1112\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/companies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"companies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generate PDF",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"symbol\": \"SMOK\",\r\n  \"creationDate\": \"2024-05-26T11:33:33.926Z\",\r\n  \"saleDate\": \"2024-05-26T11:33:33.926Z\",\r\n  \"paymentDate\": \"2024-05-26T11:33:33.926Z\",\r\n  \"netAmount\": 112222,\r\n  \"vatAmount\": 27,\r\n  \"brutAmount\": 250000,\r\n  \"products\": [\r\n    {\r\n      \"id\": 1\r\n    },\r\n    {\r\n      \"id\": 2\r\n    }\r\n  ],\r\n  \"customer\": {\r\n    \"id\": 1\r\n  },\r\n  \"seller\": {\r\n    \"id\": 2\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/invoices",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"invoices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "READ PDF",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/invoices/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"invoices",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

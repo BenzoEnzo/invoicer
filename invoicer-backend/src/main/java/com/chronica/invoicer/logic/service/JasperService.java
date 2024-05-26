@@ -42,6 +42,11 @@ public class JasperService {
 
             Map<String, Object> parameters = new HashMap<>();
 
+            parameters.put("creationDate", invoice.getCreationDate());
+            parameters.put("customerName", invoice.getCustomer().getName());
+            parameters.put("sellerName", invoice.getSeller().getName());
+            parameters.put("productsList", invoice.getProducts());
+
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

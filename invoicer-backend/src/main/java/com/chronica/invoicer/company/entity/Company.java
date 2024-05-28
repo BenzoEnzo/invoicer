@@ -18,7 +18,6 @@ import java.util.Set;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @Entity
 public class Company implements BaseEntity {
     @Id
@@ -41,4 +40,8 @@ public class Company implements BaseEntity {
 
     @OneToMany(mappedBy = "company")
     private List<Product> companyProducts;
+
+    public Company(){
+        this.companyProducts = new ArrayList<>();
+    }
 }

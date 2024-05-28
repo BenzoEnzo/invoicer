@@ -59,7 +59,8 @@ public class InvoiceService {
         List<InvoiceItem> invoiceItems = invoicePrice.getInvoiceItems();
 
         invoiceItems.forEach(g -> g.setPartialPrice(g.getQuantity()
-                .multiply(g.getProduct().getNetPrice())));
+                .multiply(g.getProduct().getNetPrice())
+                .subtract(g.getDiscount())));
 
         invoiceItemRepository.saveAll(invoiceItems);
     }

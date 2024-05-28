@@ -36,12 +36,6 @@ public class ProductService {
         Company company = CompanyMapper.INSTANCE.mapToEntity(companyService.findById(companyProductDTO.getId()));
         Product product = productMapper.mapToEntity(companyProductDTO.getCompanyProduct());
 
-        if(company.getCompanyProducts() == null)
-        {
-            company.setCompanyProducts(new ArrayList<>());
-
-        }
-
         product.setCompany(company);
         company.getCompanyProducts().add(product);
 

@@ -30,65 +30,161 @@
 			<rightPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<subDataset name="Empty Dataset1" uuid="da903386-dc11-4380-a5fe-45f40c9ba29b">
-		<property name="com.jaspersoft.studio.data.sql.tables">
-			<![CDATA[aW52b2ljZV9wcm9kdWN0cyAsMTUsMTUsZjRjZTYxN2EtMTZhMS00MGEyLWFkMDgtNzJjZDk3NmFl
-YzU4O3Byb2R1Y3QgLDE1NiwxNSwwM2EyNjQ3OC05MTZjLTRiZjMtYmRjZC03ZDE5ZmRjYzRkYWQ7]]>
-		</property>
+	<subDataset name="seller" uuid="3808bcce-065f-4b3f-be24-ea19242cc09a">
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="cfill"/>
-		<parameter name="id" class="java.lang.Long">
-			<defaultValueExpression><![CDATA[13L]]></defaultValueExpression>
+		<queryString language="SQL">
+			<![CDATA[SELECT * FROM invoice i
+JOIN company c ON i.seller_id = c.id]]>
+		</queryString>
+		<field name="id" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.name" value="id"/>
+			<property name="com.jaspersoft.studio.field.label" value="id"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+		</field>
+		<field name="creation_date" class="java.time.LocalDateTime">
+			<property name="com.jaspersoft.studio.field.name" value="creation_date"/>
+			<property name="com.jaspersoft.studio.field.label" value="creation_date"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+		</field>
+		<field name="payment_date" class="java.time.LocalDateTime">
+			<property name="com.jaspersoft.studio.field.name" value="payment_date"/>
+			<property name="com.jaspersoft.studio.field.label" value="payment_date"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+		</field>
+		<field name="sale_date" class="java.time.LocalDateTime">
+			<property name="com.jaspersoft.studio.field.name" value="sale_date"/>
+			<property name="com.jaspersoft.studio.field.label" value="sale_date"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+		</field>
+		<field name="symbol" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="symbol"/>
+			<property name="com.jaspersoft.studio.field.label" value="symbol"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+		</field>
+		<field name="customer_id" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.name" value="customer_id"/>
+			<property name="com.jaspersoft.studio.field.label" value="customer_id"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+		</field>
+		<field name="seller_id" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.name" value="seller_id"/>
+			<property name="com.jaspersoft.studio.field.label" value="seller_id"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+		</field>
+		<field name="apartment" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.name" value="apartment"/>
+			<property name="com.jaspersoft.studio.field.label" value="apartment"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="company"/>
+		</field>
+		<field name="building" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.name" value="building"/>
+			<property name="com.jaspersoft.studio.field.label" value="building"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="company"/>
+		</field>
+		<field name="city" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="city"/>
+			<property name="com.jaspersoft.studio.field.label" value="city"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="company"/>
+		</field>
+		<field name="name" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="name"/>
+			<property name="com.jaspersoft.studio.field.label" value="name"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="company"/>
+		</field>
+		<field name="nip" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.name" value="nip"/>
+			<property name="com.jaspersoft.studio.field.label" value="nip"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="company"/>
+		</field>
+		<field name="short_name" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="short_name"/>
+			<property name="com.jaspersoft.studio.field.label" value="short_name"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="company"/>
+		</field>
+		<field name="street" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="street"/>
+			<property name="com.jaspersoft.studio.field.label" value="street"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="company"/>
+		</field>
+		<field name="zip_code" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="zip_code"/>
+			<property name="com.jaspersoft.studio.field.label" value="zip_code"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="company"/>
+		</field>
+	</subDataset>
+	<subDataset name="productTable" uuid="ec7127f7-e22e-4400-b7d7-eaf03cd13d8d">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="cfill"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="id" class="java.lang.String">
+			<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
 		</parameter>
 		<queryString>
-			<![CDATA[SELECT 
-    p.name AS productName,
-    p.symbol AS productSymbol,
-    p.catalog_number,
-    p.net_price,
-    p.unit,
-    p.tax_rate,
-    ip.products_id AS productID
-FROM 
-    invoice_products ip
-JOIN 
-    product p ON p.id = ip.products_id
-WHERE 
-    ip.invoice_id = $P{id}]]>
+			<![CDATA[SELECT i.id,
+ip.brut_amount,
+ip.net_amount,
+ip.vat_amount,
+it.discount,
+it.invoice_position,
+it.partial_price,
+it.quantity,
+it.product_id,
+p.name
+ FROM invoice i JOIN invoice_price ip 
+ ON i.id = ip.invoice_id JOIN
+ invoice_item it ON ip.id = it.price_id
+ JOIN product p ON it.product_id = p.id
+ WHERE i.id = $P{id}]]>
 		</queryString>
-		<field name="productName" class="java.lang.String">
+		<field name="id" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.name" value="id"/>
+			<property name="com.jaspersoft.studio.field.label" value="id"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+		</field>
+		<field name="brut_amount" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="brut_amount"/>
+			<property name="com.jaspersoft.studio.field.label" value="brut_amount"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="invoice_price"/>
+		</field>
+		<field name="net_amount" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="net_amount"/>
+			<property name="com.jaspersoft.studio.field.label" value="net_amount"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="invoice_price"/>
+		</field>
+		<field name="vat_amount" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="vat_amount"/>
+			<property name="com.jaspersoft.studio.field.label" value="vat_amount"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="invoice_price"/>
+		</field>
+		<field name="discount" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="discount"/>
+			<property name="com.jaspersoft.studio.field.label" value="discount"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="invoice_item"/>
+		</field>
+		<field name="invoice_position" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.name" value="invoice_position"/>
+			<property name="com.jaspersoft.studio.field.label" value="invoice_position"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="invoice_item"/>
+		</field>
+		<field name="partial_price" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="partial_price"/>
+			<property name="com.jaspersoft.studio.field.label" value="partial_price"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="invoice_item"/>
+		</field>
+		<field name="quantity" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="quantity"/>
+			<property name="com.jaspersoft.studio.field.label" value="quantity"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="invoice_item"/>
+		</field>
+		<field name="product_id" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.name" value="product_id"/>
+			<property name="com.jaspersoft.studio.field.label" value="product_id"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="invoice_item"/>
+		</field>
+		<field name="name" class="java.lang.String">
 			<property name="com.jaspersoft.studio.field.name" value="name"/>
-			<property name="com.jaspersoft.studio.field.label" value="productName"/>
+			<property name="com.jaspersoft.studio.field.label" value="name"/>
 			<property name="com.jaspersoft.studio.field.tree.path" value="product"/>
-		</field>
-		<field name="productSymbol" class="java.lang.String">
-			<property name="com.jaspersoft.studio.field.name" value="symbol"/>
-			<property name="com.jaspersoft.studio.field.label" value="productSymbol"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="product"/>
-		</field>
-		<field name="catalog_number" class="java.lang.Integer">
-			<property name="com.jaspersoft.studio.field.name" value="catalog_number"/>
-			<property name="com.jaspersoft.studio.field.label" value="catalog_number"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="product"/>
-		</field>
-		<field name="net_price" class="java.math.BigDecimal">
-			<property name="com.jaspersoft.studio.field.name" value="net_price"/>
-			<property name="com.jaspersoft.studio.field.label" value="net_price"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="product"/>
-		</field>
-		<field name="unit" class="java.lang.Integer">
-			<property name="com.jaspersoft.studio.field.name" value="unit"/>
-			<property name="com.jaspersoft.studio.field.label" value="unit"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="product"/>
-		</field>
-		<field name="tax_rate" class="java.lang.Integer">
-			<property name="com.jaspersoft.studio.field.name" value="tax_rate"/>
-			<property name="com.jaspersoft.studio.field.label" value="tax_rate"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="product"/>
-		</field>
-		<field name="productID" class="java.lang.Long">
-			<property name="com.jaspersoft.studio.field.name" value="products_id"/>
-			<property name="com.jaspersoft.studio.field.label" value="productID"/>
-			<property name="com.jaspersoft.studio.field.tree.path" value="invoice_products"/>
 		</field>
 	</subDataset>
 	<parameter name="id" class="java.lang.Long">
@@ -101,40 +197,14 @@ WHERE
     i.creation_date,
     i.sale_date,
     i.payment_date,
-    i.net_amount,
-    i.vat_amount,
-    i.brut_amount,
-    p.id AS productId,
-    p.name AS productName,
-    p.symbol AS productSymbol,
-    p.catalog_number,
-    p.net_price,
-    p.unit,
-    p.tax_rate,
-    c_seller.id AS sellerId,
-    c_seller.name AS sellerName,
-    c_seller.short_name AS sellerShortName,
-    c_seller.street AS sellerStreet,
-    c_seller.building AS sellerBuilding,
-    c_seller.apartment AS sellerApartment,
-    c_seller.zip_code AS sellerZipCode,
-    c_seller.city AS sellerCity,
-    c_seller.nip AS sellerNip,
-    c_customer.id AS customerId,
-    c_customer.name AS customerName,
-    c_customer.short_name AS customerShortName,
-    c_customer.street AS customerStreet,
-    c_customer.building AS customerBuilding,
-    c_customer.apartment AS customerApartment,
-    c_customer.zip_code AS customerZipCode,
-    c_customer.city AS customerCity,
-    c_customer.nip AS customerNip
-FROM invoice i 
-JOIN company c_seller ON i.seller_id = c_seller.id 
-JOIN company c_customer ON i.cstmr_id = c_customer.id
-JOIN invoice_products ip ON i.id = ip.invoice_id
-JOIN product p ON ip.products_id = p.id
-WHERE i.id = $P{id}]]>
+    i.seller_id AS sellerId,
+    i.customer_id AS customerId,
+    c.id AS companyId,
+    c.name,
+    c.city
+FROM invoice i JOIN company c ON 
+i.customer_id = c.id
+WHERE  i.id = $P{id}]]>
 	</queryString>
 	<field name="invoiceId" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.name" value="id"/>
@@ -161,144 +231,29 @@ WHERE i.id = $P{id}]]>
 		<property name="com.jaspersoft.studio.field.label" value="payment_date"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
 	</field>
-	<field name="net_amount" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.name" value="net_amount"/>
-		<property name="com.jaspersoft.studio.field.label" value="net_amount"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
-	</field>
-	<field name="vat_amount" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.name" value="vat_amount"/>
-		<property name="com.jaspersoft.studio.field.label" value="vat_amount"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
-	</field>
-	<field name="brut_amount" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.name" value="brut_amount"/>
-		<property name="com.jaspersoft.studio.field.label" value="brut_amount"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
-	</field>
-	<field name="productId" class="java.lang.Long">
-		<property name="com.jaspersoft.studio.field.name" value="id"/>
-		<property name="com.jaspersoft.studio.field.label" value="productId"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="product"/>
-	</field>
-	<field name="productName" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="name"/>
-		<property name="com.jaspersoft.studio.field.label" value="productName"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="product"/>
-	</field>
-	<field name="productSymbol" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="symbol"/>
-		<property name="com.jaspersoft.studio.field.label" value="productSymbol"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="product"/>
-	</field>
-	<field name="catalog_number" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="catalog_number"/>
-		<property name="com.jaspersoft.studio.field.label" value="catalog_number"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="product"/>
-	</field>
-	<field name="net_price" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.name" value="net_price"/>
-		<property name="com.jaspersoft.studio.field.label" value="net_price"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="product"/>
-	</field>
-	<field name="unit" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="unit"/>
-		<property name="com.jaspersoft.studio.field.label" value="unit"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="product"/>
-	</field>
-	<field name="tax_rate" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="tax_rate"/>
-		<property name="com.jaspersoft.studio.field.label" value="tax_rate"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="product"/>
-	</field>
 	<field name="sellerId" class="java.lang.Long">
-		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.name" value="seller_id"/>
 		<property name="com.jaspersoft.studio.field.label" value="sellerId"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="company"/>
-	</field>
-	<field name="sellerName" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="name"/>
-		<property name="com.jaspersoft.studio.field.label" value="sellerName"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="company"/>
-	</field>
-	<field name="sellerShortName" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="short_name"/>
-		<property name="com.jaspersoft.studio.field.label" value="sellerShortName"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="company"/>
-	</field>
-	<field name="sellerStreet" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="street"/>
-		<property name="com.jaspersoft.studio.field.label" value="sellerStreet"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="company"/>
-	</field>
-	<field name="sellerBuilding" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="building"/>
-		<property name="com.jaspersoft.studio.field.label" value="sellerBuilding"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="company"/>
-	</field>
-	<field name="sellerApartment" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="apartment"/>
-		<property name="com.jaspersoft.studio.field.label" value="sellerApartment"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="company"/>
-	</field>
-	<field name="sellerZipCode" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="zip_code"/>
-		<property name="com.jaspersoft.studio.field.label" value="sellerZipCode"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="company"/>
-	</field>
-	<field name="sellerCity" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="city"/>
-		<property name="com.jaspersoft.studio.field.label" value="sellerCity"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="company"/>
-	</field>
-	<field name="sellerNip" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="nip"/>
-		<property name="com.jaspersoft.studio.field.label" value="sellerNip"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="company"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
 	</field>
 	<field name="customerId" class="java.lang.Long">
-		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.name" value="customer_id"/>
 		<property name="com.jaspersoft.studio.field.label" value="customerId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="invoice"/>
+	</field>
+	<field name="companyId" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="companyId"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="company"/>
 	</field>
-	<field name="customerName" class="java.lang.String">
+	<field name="name" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="name"/>
-		<property name="com.jaspersoft.studio.field.label" value="customerName"/>
+		<property name="com.jaspersoft.studio.field.label" value="name"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="company"/>
 	</field>
-	<field name="customerShortName" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="short_name"/>
-		<property name="com.jaspersoft.studio.field.label" value="customerShortName"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="company"/>
-	</field>
-	<field name="customerStreet" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="street"/>
-		<property name="com.jaspersoft.studio.field.label" value="customerStreet"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="company"/>
-	</field>
-	<field name="customerBuilding" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="building"/>
-		<property name="com.jaspersoft.studio.field.label" value="customerBuilding"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="company"/>
-	</field>
-	<field name="customerApartment" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="apartment"/>
-		<property name="com.jaspersoft.studio.field.label" value="customerApartment"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="company"/>
-	</field>
-	<field name="customerZipCode" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="zip_code"/>
-		<property name="com.jaspersoft.studio.field.label" value="customerZipCode"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="company"/>
-	</field>
-	<field name="customerCity" class="java.lang.String">
+	<field name="city" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="city"/>
-		<property name="com.jaspersoft.studio.field.label" value="customerCity"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="company"/>
-	</field>
-	<field name="customerNip" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.name" value="nip"/>
-		<property name="com.jaspersoft.studio.field.label" value="customerNip"/>
+		<property name="com.jaspersoft.studio.field.label" value="city"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="company"/>
 	</field>
 	<title>
@@ -312,13 +267,6 @@ WHERE i.id = $P{id}]]>
 					<font size="18"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Faktura nr. " + $F{invoiceId}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="70" y="10" width="430" height="70" forecolor="#2A8FE8" backcolor="#16B5E0" uuid="d1a1e5c4-cd4b-4a7d-bf82-2c5a2c6e0c3a"/>
-				<textElement textAlignment="Center">
-					<font size="42" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{sellerName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="326" y="85" width="240" height="29" uuid="d974c28b-5484-432d-8ad7-b628463095f1"/>
@@ -342,7 +290,7 @@ WHERE i.id = $P{id}]]>
 				<textElement>
 					<font size="20"/>
 				</textElement>
-				<textFieldExpression><![CDATA["nazwa firmy: " + $F{customerName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["nazwa firmy: " + $F{name}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="2" y="200" width="368" height="30" uuid="4c13bd51-b420-45be-a85e-6847900ec8f3">
@@ -352,7 +300,7 @@ WHERE i.id = $P{id}]]>
 				<textElement>
 					<font size="20"/>
 				</textElement>
-				<textFieldExpression><![CDATA["miasto:  " + $F{customerCity}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["miasto:  " + $F{city}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="2" y="230" width="368" height="30" uuid="bd42de39-56b6-46a4-9eb4-51aac49fc15b">
@@ -367,91 +315,155 @@ WHERE i.id = $P{id}]]>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="220">
+		<band height="313">
 			<componentElement>
-				<reportElement key="" x="0" y="0" width="555" height="220" forecolor="#BF3230" backcolor="#C74A48" uuid="ce964d5b-9fce-4805-8b22-4169e52c55be">
+				<reportElement x="0" y="0" width="555" height="313" uuid="41e19429-e980-4b44-9ec6-c385f9420d5f">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
 					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
-					<property name="com.jaspersoft.studio.components.autoresize.next" value="true"/>
-					<property name="com.jaspersoft.studio.components.autoresize.proportional" value="true"/>
 				</reportElement>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="Blank">
-					<datasetRun subDataset="Empty Dataset1" uuid="6ff09fa3-c45a-4788-83cb-a61fb4fa82c9">
+					<datasetRun subDataset="productTable" uuid="cabc8c4d-7481-48b5-942b-a205108bf119">
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:column width="120" uuid="8990dc13-b633-4254-8132-3bb1d9a17b82">
-						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
-						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
-							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
-							<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<jr:column width="20" uuid="2cde4a37-63cb-4cea-b83a-351082b4e268">
+						<jr:columnHeader style="Table_CH" height="30">
 							<staticText>
-								<reportElement x="1" y="0" width="100" height="30" uuid="8acb96ac-3b5f-437c-b35d-942f2aa3bd22"/>
-								<textElement textAlignment="Center">
-									<font size="20"/>
-								</textElement>
-								<text><![CDATA[Produkt]]></text>
+								<reportElement x="0" y="0" width="20" height="30" uuid="02751f37-6e35-4eb4-9169-fa9ba5f96902"/>
+								<text><![CDATA[id]]></text>
 							</staticText>
-						</jr:tableHeader>
+						</jr:columnHeader>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="120" height="30" uuid="1360305a-95cb-4bed-af17-a66e64043954"/>
-								<textFieldExpression><![CDATA[$F{productName}]]></textFieldExpression>
+								<reportElement x="0" y="0" width="20" height="30" uuid="20cd9ee4-7146-4275-a312-8337bde90693"/>
+								<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="150" uuid="a981e845-3b6e-4ed0-baef-71e51384cb30">
-						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
-						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
+					<jr:column width="20" uuid="a4486688-7b0f-483f-9f67-a8d367b9e5d4">
+						<jr:columnHeader style="Table_CH" height="30">
 							<staticText>
-								<reportElement x="0" y="0" width="150" height="30" uuid="aaf77c92-6f57-43b6-995c-c394030e9489"/>
-								<textElement textAlignment="Center">
-									<font size="20"/>
-								</textElement>
-								<text><![CDATA[CENA]]></text>
+								<reportElement x="0" y="0" width="20" height="30" uuid="896e8a75-cacd-40bf-8250-547b2fe3ad14"/>
+								<text><![CDATA[brut_amount]]></text>
 							</staticText>
-						</jr:tableHeader>
+						</jr:columnHeader>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="150" height="30" uuid="52d85844-0cb5-4b03-a372-d30c73328a9a"/>
-								<textFieldExpression><![CDATA[$F{net_price}]]></textFieldExpression>
+								<reportElement x="0" y="0" width="20" height="30" uuid="13519ec2-fcdc-4741-8894-5251df22674a"/>
+								<textFieldExpression><![CDATA[$F{brut_amount}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="144" uuid="805645cd-826f-4dda-845b-e607c89aaf03">
-						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
-						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
+					<jr:column width="20" uuid="a8f24fa5-39ac-40eb-a3fb-0f9d057b8882">
+						<jr:columnHeader style="Table_CH" height="30">
 							<staticText>
-								<reportElement x="0" y="0" width="144" height="30" uuid="664eb8e2-0451-4036-8a7e-76c2ab3ae190"/>
-								<textElement textAlignment="Center">
-									<font size="20"/>
-								</textElement>
-								<text><![CDATA[SYMBOL]]></text>
+								<reportElement x="0" y="0" width="20" height="30" uuid="51b9bdaa-e9ca-445f-88cc-84e62cb3f5f0"/>
+								<text><![CDATA[net_amount]]></text>
 							</staticText>
-						</jr:tableHeader>
+						</jr:columnHeader>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="144" height="30" uuid="f6cb4f15-0751-4687-af92-eb26b27c9cb5"/>
-								<textFieldExpression><![CDATA[$F{productSymbol}]]></textFieldExpression>
+								<reportElement x="0" y="0" width="20" height="30" uuid="9f596846-124f-4f8c-b417-bca0198e14a6"/>
+								<textFieldExpression><![CDATA[$F{net_amount}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="141" uuid="7452414b-ee4e-498c-8d26-d585e9a84ad6">
-						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
-						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
+					<jr:column width="20" uuid="d5bb68ba-7aef-4801-9243-cadb06cd1530">
+						<jr:columnHeader style="Table_CH" height="30">
 							<staticText>
-								<reportElement x="0" y="0" width="141" height="30" uuid="79405905-e19f-4957-a745-cc088781fad3"/>
-								<textElement textAlignment="Center">
-									<font size="20"/>
-								</textElement>
-								<text><![CDATA[VAT]]></text>
+								<reportElement x="0" y="0" width="20" height="30" uuid="a9d7e20d-7551-45ac-b986-e572bcac0ad1"/>
+								<text><![CDATA[vat_amount]]></text>
 							</staticText>
-						</jr:tableHeader>
+						</jr:columnHeader>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="141" height="30" uuid="3b944576-1396-43ee-8217-e02608db7fa4"/>
-								<textFieldExpression><![CDATA[$F{tax_rate}]]></textFieldExpression>
+								<reportElement x="0" y="0" width="20" height="30" uuid="2cef2f83-9d97-4996-b9af-59c31c5275d6"/>
+								<textFieldExpression><![CDATA[$F{vat_amount}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="20" uuid="23a8381f-b432-4562-9681-38c32d66b9f0">
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="20" height="30" uuid="5c700ed0-347e-4d10-ac1d-483ae014b7cd"/>
+								<text><![CDATA[discount]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="20" height="30" uuid="134ce9b3-22da-40a2-97c0-ed570fb3e6bb"/>
+								<textFieldExpression><![CDATA[$F{discount}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="20" uuid="24555087-7867-488a-96fc-afa086f706ad">
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="20" height="30" uuid="9aeee556-b1a9-4562-baa0-f046505efca8"/>
+								<text><![CDATA[invoice_position]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="20" height="30" uuid="65985286-e255-432a-9d1f-b124b9310465"/>
+								<textFieldExpression><![CDATA[$F{invoice_position}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="20" uuid="8c425b07-4b67-4370-ab76-4c5608dad49e">
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="20" height="30" uuid="34cf3240-666d-456c-a6aa-625a688a0abe"/>
+								<text><![CDATA[partial_price]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="20" height="30" uuid="a5388eb2-2456-471c-a230-1fc80379a34c"/>
+								<textFieldExpression><![CDATA[$F{partial_price}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="20" uuid="3c664295-9f4c-42f9-bdc4-202ac163ea43">
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="20" height="30" uuid="ea197b14-422f-4bd5-837d-6754afd6860d"/>
+								<text><![CDATA[quantity]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="20" height="30" uuid="c3285e62-9e7d-4d72-a61e-f958b6cc2f1f"/>
+								<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="20" uuid="fa2d2ea8-11e7-43ed-9a71-9d6265854101">
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="20" height="30" uuid="6ef2d3c8-f753-46e9-adc2-96eb76d2eeb6"/>
+								<text><![CDATA[product_id]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="20" height="30" uuid="1564b54c-bbce-4f15-bd2a-3c394f6a0ea5"/>
+								<textFieldExpression><![CDATA[$F{product_id}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="20" uuid="616026be-199f-4745-bcd1-3dcdcb805a77">
+						<jr:columnHeader style="Table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="20" height="30" uuid="26d9f5bd-aa56-4cbe-b9f6-e90da79d6657"/>
+								<text><![CDATA[name]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="20" height="30" uuid="94f264bd-7459-4982-9b92-34d21e2fd41d"/>
+								<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -460,7 +472,12 @@ WHERE i.id = $P{id}]]>
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="218"/>
+		<band height="218">
+			<textField>
+				<reportElement x="370" y="22" width="151" height="71" uuid="04d0a254-6703-442a-8712-80b763646f46"/>
+				<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
 	<pageFooter>
 		<band height="109">

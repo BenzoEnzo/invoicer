@@ -37,6 +37,11 @@ public class CompanyService {
     }
 
     public List<ProductDTO> getCompanyProducts(Long id){
-        return companyRepository.findById(id).get().getCompanyProducts().stream().map(ProductMapper.INSTANCE::mapToDTO).toList();
+        return companyRepository.findById(id)
+                .get()
+                .getCompanyProducts()
+                .stream()
+                .map(ProductMapper.INSTANCE::mapToDTO)
+                .toList();
     }
 }

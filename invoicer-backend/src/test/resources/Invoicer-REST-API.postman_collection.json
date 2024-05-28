@@ -120,7 +120,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"symbol\": \"SMOK\",\r\n  \"creationDate\": \"2024-05-26T11:33:33.926Z\",\r\n  \"saleDate\": \"2024-05-26T11:33:33.926Z\",\r\n  \"paymentDate\": \"2024-05-26T11:33:33.926Z\",\r\n  \"netAmount\": 112222,\r\n  \"vatAmount\": 27,\r\n  \"brutAmount\": 250000,\r\n  \"products\": [\r\n    {\r\n      \"id\": 1\r\n    },\r\n    {\r\n      \"id\": 2\r\n    }\r\n  ],\r\n  \"customer\": {\r\n    \"id\": 1\r\n  },\r\n  \"seller\": {\r\n    \"id\": 2\r\n  }\r\n}",
+					"raw": "{\r\n  \"id\": 0,\r\n  \"symbol\": \"string\",\r\n  \"creationDate\": \"2024-05-28T11:31:05.964Z\",\r\n  \"saleDate\": \"2024-05-28T11:31:05.964Z\",\r\n  \"paymentDate\": \"2024-05-28T11:31:05.964Z\",\r\n  \"seller\": {\r\n    \"id\": 0,\r\n    \"name\": \"string\",\r\n    \"shortName\": \"string\",\r\n    \"street\": \"string\",\r\n    \"building\": 0,\r\n    \"apartment\": 0,\r\n    \"zipCode\": \"string\",\r\n    \"city\": \"string\",\r\n    \"nip\": 0\r\n  },\r\n  \"customer\": {\r\n    \"id\": 0,\r\n    \"name\": \"string\",\r\n    \"shortName\": \"string\",\r\n    \"street\": \"string\",\r\n    \"building\": 0,\r\n    \"apartment\": 0,\r\n    \"zipCode\": \"string\",\r\n    \"city\": \"string\",\r\n    \"nip\": 0\r\n  },\r\n  \"invoicePrices\": [\r\n    {\r\n      \"id\": 0,\r\n      \"netAmount\": 0,\r\n      \"vatAmount\": 0,\r\n      \"brutAmount\": 0,\r\n      \"invoiceItem\": {\r\n        \"id\": 0,\r\n        \"invoicePosition\": 0,\r\n        \"quantity\": 0,\r\n        \"discount\": 0,\r\n        \"product\": {\r\n          \"id\": 0,\r\n          \"name\": \"string\",\r\n          \"symbol\": \"string\",\r\n          \"catalogNumber\": 0,\r\n          \"netPrice\": 0,\r\n          \"unit\": \"PIECE\",\r\n          \"taxRate\": \"TAX_RATE_23\"\r\n        }\r\n      }\r\n    }\r\n  ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -158,6 +158,46 @@
 						"api",
 						"invoices",
 						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read all companies",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/companies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"companies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read all products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products"
 					]
 				}
 			},

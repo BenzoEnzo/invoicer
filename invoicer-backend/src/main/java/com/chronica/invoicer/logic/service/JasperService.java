@@ -1,9 +1,7 @@
 package com.chronica.invoicer.logic.service;
 
-import com.chronica.invoicer.invoice.dto.InvoiceDTO;
 import com.chronica.invoicer.invoice.entity.Invoice;
 
-import com.chronica.invoicer.logic.mapper.InvoiceMapper;
 import lombok.RequiredArgsConstructor;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -14,40 +12,34 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+
+import javax.sql.DataSource;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Collections;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
 public class JasperService {
-    private final InvoiceService invoiceService;
     private final ResourceLoader resourceLoader;
+    private final DataSource dataSource;
 
     public ResponseEntity<byte[]> generateInvoiceReport(Long id) {
         try {
-            Invoice invoice = invoiceService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invoice not found"));
-
-            if (invoice == null) {
-                return ResponseEntity.notFound().build();
-            }
-
-            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(Collections.singletonList(invoice));
 
             String templatePath = "classpath:invoice.jrxml";
 
             JasperReport jasperReport = JasperCompileManager.compileReport(resourceLoader.getResource(templatePath).getInputStream());
-
+            Connection connection = dataSource.getConnection();
             Map<String, Object> parameters = new HashMap<>();
 
-            parameters.put("creationDate", invoice.getCreationDate());
-            parameters.put("customerName", invoice.getCustomer().getName());
-            parameters.put("sellerName", invoice.getSeller().getName());
-            parameters.put("productsList", invoice.getProducts());
 
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+            parameters.put("id", id);
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, connection);
 
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
@@ -58,7 +50,7 @@ public class JasperService {
             headers.setContentDispositionFormData("filename", "invoice_" + id + ".pdf");
             return new ResponseEntity<>(pdfBytes, headers, HttpStatus.OK);
 
-        } catch (IOException | JRException e) {
+        } catch (IOException | SQLException | JRException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);

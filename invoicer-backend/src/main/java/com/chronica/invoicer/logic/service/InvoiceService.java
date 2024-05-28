@@ -1,28 +1,48 @@
 package com.chronica.invoicer.logic.service;
 
+import com.chronica.invoicer.company.dto.CompanyDTO;
+import com.chronica.invoicer.company.entity.Company;
 import com.chronica.invoicer.invoice.dto.InvoiceDTO;
+import com.chronica.invoicer.invoice.dto.InvoiceItemDTO;
 import com.chronica.invoicer.invoice.entity.Invoice;
-import com.chronica.invoicer.logic.mapper.InvoiceMapper;
+import com.chronica.invoicer.invoice.entity.InvoiceItem;
+import com.chronica.invoicer.invoice.entity.InvoicePrice;
+import com.chronica.invoicer.logic.mapper.*;
+import com.chronica.invoicer.logic.repository.InvoiceItemRepository;
+import com.chronica.invoicer.logic.repository.InvoicePriceRepository;
 import com.chronica.invoicer.logic.repository.InvoiceRepository;
 
+import com.chronica.invoicer.product.dto.ProductDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class InvoiceService {
     private final InvoiceRepository invoiceRepository;
+    private final InvoiceItemRepository invoiceItemRepository;
+    private final InvoicePriceRepository invoicePriceRepository;
     private final InvoiceMapper invoiceMapper;
-    public Optional<Invoice> findById(Long id) {
-        return invoiceRepository.findById(id);
-    }
+    private final InvoicePriceMapper invoicePriceMapper;
+    private final InvoiceItemMapper invoiceItemMapper;
 
-    @Transactional
     public InvoiceDTO create(InvoiceDTO invoiceDTO){
+        InvoicePrice invoicePrice = invoicePriceMapper.mapToEntity(invoiceDTO.getInvoicePrice());
+        List<InvoiceItem> invoiceItems = invoiceDTO
+                .getInvoicePrice()
+                .getInvoiceItems()
+                .stream().map(invoiceItemMapper::mapToEntity).toList();
+        invoicePrice.setInvoiceItems(invoiceItems);
+
+        invoiceItemRepository.saveAll(invoiceItems);
+        invoicePriceRepository.save(invoicePrice);
+
         Invoice invoice = invoiceMapper.mapToEntity(invoiceDTO);
+        invoice.setInvoicePrice(invoicePrice);
 
         invoiceRepository.save(invoice);
 

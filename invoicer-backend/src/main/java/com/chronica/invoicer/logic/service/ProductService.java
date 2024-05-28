@@ -29,7 +29,6 @@ public class ProductService {
     public ProductDTO create(ProductDTO productDTO) {
         Product product = productMapper.mapToEntity(productDTO);
         productRepository.save(product);
-        productDTO = productMapper.mapToDTO(product);
-        return productDTO;
+        return productMapper.mapToDTO(product);
     }
 }

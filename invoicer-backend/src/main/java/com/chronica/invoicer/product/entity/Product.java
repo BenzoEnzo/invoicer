@@ -1,8 +1,7 @@
 package com.chronica.invoicer.product.entity;
 
-import com.chronica.invoicer.company.entity.Company;
 import com.chronica.invoicer.core.BaseEntity;
-import com.chronica.invoicer.invoice.entity.Invoice;
+import com.chronica.invoicer.invoice.entity.InvoiceItem;
 import com.chronica.invoicer.invoice.enumerated.Unit;
 import com.chronica.invoicer.product.enumerated.TaxRate;
 import jakarta.persistence.*;
@@ -12,6 +11,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter

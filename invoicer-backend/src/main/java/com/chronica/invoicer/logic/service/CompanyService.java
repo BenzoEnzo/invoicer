@@ -20,14 +20,13 @@ public class CompanyService {
         return companyRepository.findAll().stream().map(companyMapper::mapToDTO).toList();
     }
 
-    public Optional<CompanyDTO> findById(Long id) {
-        return companyRepository.findById(id).map(companyMapper::mapToDTO);
+    public CompanyDTO findById(Long id) {
+        return companyRepository.findById(id).map(companyMapper::mapToDTO).orElseThrow();
     }
 
     public CompanyDTO create(CompanyDTO companyDTO) {
         Company company = companyMapper.mapToEntity(companyDTO);
         companyRepository.save(company);
-        companyDTO = companyMapper.mapToDTO(company);
-        return companyDTO;
+        return companyMapper.mapToDTO(company);
     }
 }

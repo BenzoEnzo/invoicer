@@ -27,13 +27,14 @@ public class Invoice implements BaseEntity {
     private Date creationDate;
     private Date saleDate;
     private Date paymentDate;
-    private BigDecimal netAmount;
-    private BigDecimal vatAmount;
-    private BigDecimal brutAmount;
-    @ManyToMany
-    private List<Product> products;
-    @ManyToOne
-    private Company customer;
-    @ManyToOne
+    @OneToOne(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
+    private InvoicePrice invoicePrice;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "seller_id")
     private Company seller;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "customer_id")
+    private Company customer;
 }

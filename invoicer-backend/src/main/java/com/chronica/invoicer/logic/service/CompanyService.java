@@ -3,7 +3,9 @@ package com.chronica.invoicer.logic.service;
 import com.chronica.invoicer.company.dto.CompanyDTO;
 import com.chronica.invoicer.company.entity.Company;
 import com.chronica.invoicer.logic.mapper.CompanyMapper;
+import com.chronica.invoicer.logic.mapper.ProductMapper;
 import com.chronica.invoicer.logic.repository.CompanyRepository;
+import com.chronica.invoicer.product.dto.ProductDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,5 +30,13 @@ public class CompanyService {
         Company company = companyMapper.mapToEntity(companyDTO);
         companyRepository.save(company);
         return companyMapper.mapToDTO(company);
+    }
+
+    public void save(Company company){
+        companyRepository.save(company);
+    }
+
+    public List<ProductDTO> getCompanyProducts(Long id){
+        return companyRepository.findById(id).get().getCompanyProducts().stream().map(ProductMapper.INSTANCE::mapToDTO).toList();
     }
 }

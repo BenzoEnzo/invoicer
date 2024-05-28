@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Mapper(componentModel = "spring")
 public interface ProductMapper  {
     ProductMapper INSTANCE = Mappers.getMapper(ProductMapper.class);
-    @Mapping(target = "id", ignore = true)
+
     Product mapToEntity(ProductDTO productDTO);
     ProductDTO mapToDTO(Product product);
 }

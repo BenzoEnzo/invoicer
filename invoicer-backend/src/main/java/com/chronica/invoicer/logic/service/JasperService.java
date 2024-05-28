@@ -36,7 +36,6 @@ public class JasperService {
             Connection connection = dataSource.getConnection();
             Map<String, Object> parameters = new HashMap<>();
 
-
             parameters.put("id", id);
 
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, connection);

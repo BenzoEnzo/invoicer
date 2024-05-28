@@ -202,6 +202,28 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Read all company products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/companies/1/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"companies",
+						"1",
+						"products"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

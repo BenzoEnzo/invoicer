@@ -1,5 +1,6 @@
 package com.chronica.invoicer.company.dto;
 
+
 import com.chronica.invoicer.core.EntityDTO;
 import com.chronica.invoicer.product.dto.ProductDTO;
 import lombok.AllArgsConstructor;
@@ -13,13 +14,8 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CompanyDTO extends EntityDTO {
+public class CompanyProductDTO extends EntityDTO {
+    private Long id;
     private String name;
-    private String shortName;
-    private String street;
-    private Integer building;
-    private Integer apartment;
-    private String zipCode;
-    private String city;
-    private Integer nip;
+    private ProductDTO companyProduct;
 }

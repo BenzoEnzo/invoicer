@@ -1,5 +1,6 @@
 package com.chronica.invoicer.product.entity;
 
+import com.chronica.invoicer.company.entity.Company;
 import com.chronica.invoicer.core.BaseEntity;
 import com.chronica.invoicer.invoice.entity.InvoiceItem;
 import com.chronica.invoicer.invoice.enumerated.Unit;
@@ -29,4 +30,8 @@ public class Product implements BaseEntity {
     private BigDecimal netPrice;
     private Unit unit;
     private TaxRate taxRate;
+
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
 }

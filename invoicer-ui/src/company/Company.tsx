@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import CompanyAPI from './service/CompanyAPI';
+import CompanyDetails from './CompanyDetails';
 import { CompanyDTO } from './model/CompanyDTO';
 import './style/company.css';
 import '../shared/style/form.css';
@@ -17,10 +18,11 @@ function Company() {
     });
 
     const [registrationSuccess, setRegistrationSuccess] = useState(false);
+    const [fetchInfo, setFetchInfo] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [showAccessForm, setShowAccessForm] = useState(false);
     const [accessCompanyId, setAccessCompanyId] = useState('');
-
+    const [companyInfo, setCompanyInfo] = useState<CompanyDTO | null>(null);
     const handleGetAccessClick = () => {
         setShowAccessForm(true);
     };
@@ -37,8 +39,10 @@ function Company() {
         event.preventDefault();
 
         try {
-            const companyData = await CompanyAPI.getCompanyById(parseInt(accessCompanyId, 10));
-            console.log(companyData);
+            const data = await CompanyAPI.getCompanyById(parseInt(accessCompanyId, 10));
+            setShowAccessForm(false);
+            setFetchInfo(true);
+            setCompanyInfo(data);
         } catch (error) {
             setError('Wystąpił błąd podczas pobierania danych firmy.');
         }
@@ -62,23 +66,31 @@ function Company() {
     };
 
     return (
-        <div className="company-container">
-            <div className="form-buttons">
-                <button onClick={handleRegisterCompanyClick} disabled={!showAccessForm}>
-                    Zarejestruj firmę
-                </button>
-                <button onClick={handleGetAccessClick} disabled={showAccessForm}>
-                    Uzyskaj dostęp
-                </button>
-            </div>
+        <>
 
-            {showAccessForm ? (
+        {fetchInfo && (
+                <CompanyDetails companyDetailData={companyInfo}/>
+        )}
+
+    <div className="company-container">
+            {!fetchInfo && (
+                    <div className="form-buttons">
+                        <button onClick={handleRegisterCompanyClick} disabled={!showAccessForm}>
+                            Zarejestruj firmę
+                        </button>
+                        <button onClick={handleGetAccessClick} disabled={showAccessForm}>
+                            Uzyskaj dostęp
+                        </button>
+                    </div>
+            )}
+
+            {!fetchInfo && showAccessForm ? (
                 <div className="input-form">
                     <form onSubmit={handleAccessSubmit}>
                         <div>
                             <label htmlFor="accessCompanyId">ID firmy:</label>
                             <input
-                                type="text"
+                                type="number"
                                 id="accessCompanyId"
                                 value={accessCompanyId}
                                 onChange={handleAccessCompanyIdChange}
@@ -88,7 +100,7 @@ function Company() {
                         <button type="submit">OK</button>
                     </form>
                 </div>
-            ) : (
+            ) : !fetchInfo && (
                 <div className="input-form">
                     <form onSubmit={handleSubmit}>
                         <div>
@@ -113,7 +125,7 @@ function Company() {
                         </div>
                         <div>
                             <label htmlFor="apartment">Numer lokalu:</label>
-                            <input type="text" id="apartment" name="apartment" value={formData.apartment}
+                            <input type="number" id="apartment" name="apartment" value={formData.apartment}
                                    onChange={handleChange}/>
                         </div>
                         <div>
@@ -136,9 +148,11 @@ function Company() {
                 </div>
             )}
 
-            {registrationSuccess && <p style={{color: 'green'}}>Firma została pomyślnie zarejestrowana!</p>}
-            {error && <p style={{color: 'red'}}>{error}</p>}
+            {registrationSuccess && !error && <p style={{color: 'green'}}>Firma została pomyślnie zarejestrowana!</p>}
+            {!fetchInfo && error && <p style={{color: 'red'}}>{error}</p>}
         </div>
+        </>
+
     );
 }
 

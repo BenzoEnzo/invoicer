@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {CompanyDTO} from "../model/CompanyDTO";
+import {ProductDTO} from "../../product/model/ProductDTO"
 
 const API_COMPANY_URL = '/api/companies';
 
@@ -19,6 +20,15 @@ class CompanyAPI {
             return response.data;
         } catch (error) {
             throw error;
+        }
+    }
+
+    async getCompanyProducts(companyId: number): Promise<ProductDTO[]> {
+        try {
+            const response = await axios.get<ProductDTO[]>(`${API_COMPANY_URL}/${companyId}/products`);
+            return response.data;
+        } catch (error) {
+            throw new Error('Błąd podczas pobierania produktów firmy.');
         }
     }
 }

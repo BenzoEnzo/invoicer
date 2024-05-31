@@ -1,0 +1,51 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.header {
+  background-color: #282c34;
+  color: white;
+  padding: 4rem;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.content-card {
+  background-color: white;
+  border-radius: 8px;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+}
+
+.header-content {
+  width: 100%;
+}
+
+.logo {
+  margin: 0;
+  text-align: left;
+  font-size: 1.5rem;
+}
+
+.header h1 {
+  margin: 0;
+}
+
+.detail {
+  flex: 1;
+  padding: 2rem;
+  background-color: #f4f4f4;
+}
+
+.footer {
+  background-color: #333;
+  color: white;
+  padding: 4rem;
+  text-align: center;
+}

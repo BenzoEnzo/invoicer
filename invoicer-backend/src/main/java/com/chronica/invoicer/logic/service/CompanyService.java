@@ -19,16 +19,23 @@ public class CompanyService {
     private final CompanyMapper companyMapper;
 
     public List<CompanyDTO> findAll() {
-        return companyRepository.findAll().stream().map(companyMapper::mapToDTO).toList();
+        return companyRepository.findAll()
+                .stream()
+                .map(companyMapper::mapToDTO)
+                .toList();
     }
 
     public CompanyDTO findById(Long id) {
-        return companyRepository.findById(id).map(companyMapper::mapToDTO).orElseThrow();
+        return companyRepository.findById(id)
+                .map(companyMapper::mapToDTO)
+                .orElseThrow();
     }
 
     public CompanyDTO create(CompanyDTO companyDTO) {
         Company company = companyMapper.mapToEntity(companyDTO);
+
         companyRepository.save(company);
+
         return companyMapper.mapToDTO(company);
     }
 

@@ -2,7 +2,7 @@ import TaxRate from "./TaxRate";
 import Unit from "./Unit";
 
 export interface ProductDTO {
-    id: number;
+    id?: number;
     name: string;
     symbol: string;
     catalogNumber: number;

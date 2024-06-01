@@ -14,7 +14,6 @@ function Product({ companyId }: { companyId: number }) {
     const [error, setError] = useState<string | null>(null);
     const [editMode, setEditMode] = useState(false);
     const [newProduct, setNewProduct] = useState<ProductDTO>({
-        id: 0,
         name: '',
         symbol: '',
         catalogNumber: 0,
@@ -29,7 +28,7 @@ function Product({ companyId }: { companyId: number }) {
     ) => {
         const { name, value } = e.target;
 
-        // Type assertion to let TypeScript know the type of 'value' is correct
+
         setNewProduct((prevProduct) => ({
             ...prevProduct,
             [name]:

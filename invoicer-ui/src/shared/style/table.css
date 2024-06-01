@@ -1,23 +1,23 @@
 .table {
     width: 100%;
-    border-collapse: separate; /* Add space between cells */
-    border-spacing: 0 10px;  /* Customize spacing as desired */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box shadow */
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .table th,
 .table td {
     padding: 15px;
     text-align: left;
-    vertical-align: middle; /* Center text vertically */
+    vertical-align: middle;
     border-bottom: 1px solid #ddd;
     border-left: 1px solid #ddd;
 }
 
 .table th {
-    background: linear-gradient(to bottom right, #f8f8f8, #e8e8e8); /* Subtle gradient */
+    background: linear-gradient(to bottom right, #f8f8f8, #e8e8e8);
     font-weight: bold;
-    color: #333; /* Darker text color */
+    color: #333;
 }
 
 .table td {

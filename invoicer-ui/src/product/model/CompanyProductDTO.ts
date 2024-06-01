@@ -1,7 +1,7 @@
 import { ProductDTO } from './ProductDTO';
 
 export interface CompanyProductDTO {
-    id?: number;
+    id: number;
     name: string;
     companyProduct: ProductDTO;
 }

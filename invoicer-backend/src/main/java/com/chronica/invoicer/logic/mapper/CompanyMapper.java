@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Mapper(componentModel = "spring")
 public interface CompanyMapper {
     CompanyMapper INSTANCE = Mappers.getMapper(CompanyMapper.class);
-    @Mapping(target = "id", ignore = true)
+
     Company mapToEntity(CompanyDTO companyDTO);
 
     CompanyDTO mapToDTO(Company company);

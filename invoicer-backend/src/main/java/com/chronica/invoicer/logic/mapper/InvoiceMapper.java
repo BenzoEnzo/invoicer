@@ -9,13 +9,11 @@ import org.mapstruct.factory.Mappers;
 
 
 @Mapper(componentModel = "spring")
-public interface InvoiceMapper  {
+public interface InvoiceMapper {
     InvoiceMapper INSTANCE = Mappers.getMapper(InvoiceMapper.class);
 
     @Mapping(target = "id", ignore = true)
     Invoice mapToEntity(InvoiceDTO invoiceDTO);
 
-
     InvoiceDTO mapToDTO(Invoice invoice);
-
 }

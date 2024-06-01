@@ -40,6 +40,15 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n  \"id\": 6,\r\n  \"name\": \"xd\",\r\n  \"companyProduct\": {\r\n  \"name\": \"Produkt testowy 2\",\r\n  \"symbol\": \"4MMC 2\",\r\n  \"catalogNumber\": 1,\r\n  \"netPrice\": 10,\r\n  \"unit\": \"GRAM\",\r\n  \"taxRate\": \"TAX_RATE_23\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "http://localhost:8080/api/products",
 					"protocol": "http",

@@ -3,6 +3,7 @@ import CompanyAPI from '../company/service/CompanyAPI';
 import {ProductDTO} from './model/ProductDTO';
 import '../shared/style/table.css';
 import '../shared/style/form.css';
+import '../shared/style/alert.css';
 import {Check2, PlusCircle, Trash} from "react-bootstrap-icons";
 import ProductAPI from "./service/ProductAPI";
 import Unit from "./model/Unit";
@@ -13,6 +14,7 @@ function Product({ companyId }: { companyId: number }) {
     const [products, setProducts] = useState<ProductDTO[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [editMode, setEditMode] = useState(false);
+    const [alert, setAlert] = useState(false);
     const [newProduct, setNewProduct] = useState<ProductDTO>({
         name: '',
         symbol: '',
@@ -55,16 +57,20 @@ function Product({ companyId }: { companyId: number }) {
         setEditMode(true);
     };
 
+
     const handleAddProduct = async () => {
         try {
             const createdProduct = await ProductAPI.createProduct({
-                id: companyId, // Pass companyId from the Product component's props
+                id: companyId,
                 name: '',
                 companyProduct: newProduct,
-            });
-
-            setProducts(prevProducts => [...prevProducts, createdProduct.companyProduct]);
+            })
+            setProducts(prevProducts => [...prevProducts, createdProduct]);
+            setAlert(true);
             setEditMode(false);
+            setTimeout(() => {
+                setAlert(false);
+            }, 1500);
         } catch (error) {
             console.error('Error creating product:', error);
         }
@@ -77,7 +83,16 @@ function Product({ companyId }: { companyId: number }) {
              <button onClick={isEditingMode}>Dodaj produkt <PlusCircle className="ml-2" /></button>
             </div>
 
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            <div>
+                {alert && (
+                    <div className="alert alert-success" role="alert">
+                        Dodano produkt: {newProduct.name} !
+                    </div>
+                )}
+                {error && <p style={{ color: 'red' }}>{error}</p>}
+            </div>
+
+
 
             <table className="table"> {/* Use the 'table' class */}
                 <thead>
@@ -121,11 +136,13 @@ function Product({ companyId }: { companyId: number }) {
                                 value={newProduct.taxRate}
                                 onChange={handleProductInputChange}
                             >
-                                {Object.values(TaxRate).map((taxRate) => (
-                                    <option key={taxRate} value={taxRate}>
-                                        {taxRate}
-                                    </option>
-                                ))}
+                                {Object.values(TaxRate)
+                                    .filter((taxRate) => isNaN(Number(taxRate)))
+                                    .map((taxRate) => (
+                                        <option key={taxRate} value={taxRate}>
+                                            {taxRate}
+                                        </option>
+                                    ))}
                             </select>
                         </td>
                         <td>

@@ -69,7 +69,7 @@ function Company() {
         <>
 
         {fetchInfo && (
-                <CompanyDetails companyDetailData={companyInfo}/>
+                <CompanyDetails companyDetailData={companyInfo} companyId={Number(accessCompanyId)}/>
         )}
 
     <div className="company-container">

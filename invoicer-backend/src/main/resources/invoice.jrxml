@@ -241,7 +241,7 @@ FROM invoice i JOIN invoice_price ip
     c.city
 FROM invoice i JOIN company c ON 
 i.customer_id = c.id
-WHERE  i.id = 12]]>
+WHERE  i.id = $P{id}]]>
 	</queryString>
 	<field name="invoiceId" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.name" value="id"/>
@@ -445,7 +445,7 @@ WHERE  i.id = 12]]>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
 							<staticText>
 								<reportElement x="0" y="0" width="92" height="30" uuid="ea197b14-422f-4bd5-837d-6754afd6860d"/>
-								<text><![CDATA[ilość]]></text>
+								<text><![CDATA[ilosc]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="Table_TD" height="30">

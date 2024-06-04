@@ -5,7 +5,7 @@ import Product from "../product/Product";
 import {CompanyDTO} from "./model/CompanyDTO";
 
 
-function CompanyDetails({ companyDetailData }: { companyDetailData: CompanyDTO | null }){
+function CompanyDetails({ companyDetailData, companyId }: { companyDetailData: CompanyDTO | null, companyId: number }){
     const [activeMenuItem, setActiveMenuItem] = useState('Dane');
     const [isLoading, setIsLoading] = useState(false);
     const handleMenuItemClick = (item: string) => {
@@ -28,7 +28,7 @@ function CompanyDetails({ companyDetailData }: { companyDetailData: CompanyDTO |
                 </div>
             </div>
                 <div className="content">
-                    {activeMenuItem === 'Produkty' && <Product companyId={6}/>}
+                    {activeMenuItem === 'Produkty' && <Product companyId={companyId}/>}
                     {activeMenuItem === 'Faktury' && (
                         <div>
                         </div>
@@ -51,12 +51,13 @@ function CompanyDetails({ companyDetailData }: { companyDetailData: CompanyDTO |
                                     <label htmlFor="address">Adres:</label>
                                     <div className="address-group">
                                         <input type="text" id="street" value={companyDetailData.street} readOnly/>
-                                        <input type="number" id="building" value={companyDetailData.building} readOnly/>
-                                        {companyDetailData.apartment !== 0 && ( // Show apartment only if it has a value
-                                            <input type="number" id="apartment" value={companyDetailData.apartment}
+                                        <input type="text" id="building" value={companyDetailData.building} readOnly/>
+                                        {companyDetailData.apartment !== 0 && (
+                                            <input type="text" id="apartment" value={companyDetailData.apartment}
                                                    readOnly/>
                                         )}
                                     </div>
+
                                     <div className="city-zip-group">
                                         <input type="text" id="zipCode" value={companyDetailData.zipCode} readOnly/>
                                         <input type="text" id="city" value={companyDetailData.city} readOnly/>

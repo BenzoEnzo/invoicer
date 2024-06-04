@@ -61,13 +61,16 @@ function Product({ companyId }: { companyId: number }) {
     const handleAddProduct = async () => {
         try {
             const createdProduct = await ProductAPI.createProduct({
-                id: companyId, // Pass companyId from the Product component's props
+                id: companyId,
                 name: '',
                 companyProduct: newProduct,
             })
-            setProducts(prevProducts => [...prevProducts, createdProduct.companyProduct]);
+            setProducts(prevProducts => [...prevProducts, createdProduct]);
             setAlert(true);
             setEditMode(false);
+            setTimeout(() => {
+                setAlert(false);
+            }, 1500);
         } catch (error) {
             console.error('Error creating product:', error);
         }
@@ -83,7 +86,7 @@ function Product({ companyId }: { companyId: number }) {
             <div>
                 {alert && (
                     <div className="alert alert-success" role="alert">
-                        Dodano produkt !
+                        Dodano produkt: {newProduct.name} !
                     </div>
                 )}
                 {error && <p style={{ color: 'red' }}>{error}</p>}
@@ -133,11 +136,13 @@ function Product({ companyId }: { companyId: number }) {
                                 value={newProduct.taxRate}
                                 onChange={handleProductInputChange}
                             >
-                                {Object.values(TaxRate).map((taxRate) => (
-                                    <option key={taxRate} value={taxRate}>
-                                        {taxRate}
-                                    </option>
-                                ))}
+                                {Object.values(TaxRate)
+                                    .filter((taxRate) => isNaN(Number(taxRate)))
+                                    .map((taxRate) => (
+                                        <option key={taxRate} value={taxRate}>
+                                            {taxRate}
+                                        </option>
+                                    ))}
                             </select>
                         </td>
                         <td>

@@ -2,6 +2,7 @@ import './style/company-details.css';
 import React, { useState } from 'react';
 import '../shared/style/form.css';
 import Product from "../product/Product";
+import Invoice from "../invoicer/Invoice";
 import {CompanyDTO} from "./model/CompanyDTO";
 
 
@@ -29,10 +30,7 @@ function CompanyDetails({ companyDetailData, companyId }: { companyDetailData: C
             </div>
                 <div className="content">
                     {activeMenuItem === 'Produkty' && <Product companyId={companyId}/>}
-                    {activeMenuItem === 'Faktury' && (
-                        <div>
-                        </div>
-                    )}
+                    {activeMenuItem === 'Faktury' && <Invoice/> }
                     {activeMenuItem === 'Dane' && companyDetailData != null && (
                         <>                   <h2>Dane prywatne</h2>
                         <div className="content">

@@ -7,6 +7,64 @@
 	},
 	"item": [
 		{
+			"name": "Create company",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Firma testowa - FTE2024\",\r\n  \"shortName\": \"FTE2024\",\r\n  \"street\": \"street\",\r\n  \"building\": 1,\r\n  \"apartment\": 1,\r\n  \"zipCode\": \"44-102\",\r\n  \"city\": \"Jelcz Laskowice\",\r\n  \"nip\": 98928312\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/companies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"companies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create companies[2]",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Crystal LAB\",\r\n  \"shortName\": \"clab\",\r\n  \"street\": \"street\",\r\n  \"building\": 1,\r\n  \"apartment\": 1,\r\n  \"zipCode\": \"44-102\",\r\n  \"city\": \"Jelcz Laskowice\",\r\n  \"nip\": 89283012\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/companies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"companies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Create products",
 			"request": {
 				"method": "POST",
@@ -40,6 +98,15 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n  \"id\": 1,\r\n  \"companyProduct\": {\r\n  \"name\": \"Amfetamina\",\r\n  \"symbol\": \"BMK\",\r\n  \"catalogNumber\": 1,\r\n  \"netPrice\": 5,\r\n  \"unit\": \"GRAM\",\r\n  \"taxRate\": \"TAX_RATE_23\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "http://localhost:8080/api/products",
 					"protocol": "http",
@@ -56,13 +123,13 @@
 			"response": []
 		},
 		{
-			"name": "Create companies",
+			"name": "Create products[3]",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"Ue2024\",\r\n  \"shortName\": \"ue\",\r\n  \"street\": \"compton\",\r\n  \"building\": 1,\r\n  \"apartment\": 1,\r\n  \"zipCode\": \"44\",\r\n  \"city\": \"23\",\r\n  \"nip\": 1111\r\n}",
+					"raw": "\r\n{\r\n  \"id\": 1,\r\n  \"companyProduct\": {\r\n  \"name\": \"Pszenica\",\r\n  \"symbol\": \"PSZA\",\r\n  \"catalogNumber\": 2,\r\n  \"netPrice\": 50,\r\n  \"unit\": \"KILOGRAM\",\r\n  \"taxRate\": \"TAX_RATE_5\"\r\n  }\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -70,7 +137,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/companies",
+					"raw": "http://localhost:8080/api/products",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -78,36 +145,7 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"companies"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create companies[2]",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"Ue2025\",\r\n  \"shortName\": \"ue2\",\r\n  \"street\": \"xd\",\r\n  \"building\": 2,\r\n  \"apartment\": 3,\r\n  \"zipCode\": \"45\",\r\n  \"city\": \"24\",\r\n  \"nip\": 1112\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/api/companies",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"companies"
+						"products"
 					]
 				}
 			},
@@ -120,7 +158,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"symbol\": \"SMOK\",\r\n  \"creationDate\": \"2024-05-26T11:33:33.926Z\",\r\n  \"saleDate\": \"2024-05-26T11:33:33.926Z\",\r\n  \"paymentDate\": \"2024-05-26T11:33:33.926Z\",\r\n  \"netAmount\": 112222,\r\n  \"vatAmount\": 27,\r\n  \"brutAmount\": 250000,\r\n  \"products\": [\r\n    {\r\n      \"id\": 1\r\n    },\r\n    {\r\n      \"id\": 2\r\n    }\r\n  ],\r\n  \"customer\": {\r\n    \"id\": 1\r\n  },\r\n  \"seller\": {\r\n    \"id\": 2\r\n  }\r\n}",
+					"raw": "{\r\n  \"symbol\": \"CHEN1\",\r\n  \"creationDate\": \"2024-06-04T10:37:57.806Z\",\r\n  \"saleDate\": \"2024-06-04T10:37:57.806Z\",\r\n  \"paymentDate\": \"2024-06-04T10:37:57.806Z\",\r\n  \"seller\": {\r\n    \"id\": 1\r\n  },\r\n  \"customer\": {\r\n    \"id\": 2\r\n  },\r\n  \"invoicePrice\": {\r\n    \"id\": 2,\r\n    \"netAmount\": 6,\r\n    \"vatAmount\": 6,\r\n    \"brutAmount\": 7,\r\n    \"invoiceItems\": [\r\n      {\r\n        \"id\": 2,\r\n        \"invoicePosition\": 0,\r\n        \"quantity\": 0,\r\n        \"discount\": 0,\r\n        \"product\": {\r\n          \"id\": 1,\r\n          \"name\": \"string\",\r\n          \"symbol\": \"string\",\r\n          \"catalogNumber\": 0,\r\n          \"netPrice\": 0,\r\n          \"unit\": \"PIECE\",\r\n          \"taxRate\": \"TAX_RATE_23\"\r\n        },\r\n        \"partialPrice\": 5\r\n      },\r\n       {\r\n        \"id\": 23,\r\n        \"invoicePosition\": 0,\r\n        \"quantity\": 0,\r\n        \"discount\": 0,\r\n        \"product\": {\r\n          \"id\": 2,\r\n          \"name\": \"string\",\r\n          \"symbol\": \"string\",\r\n          \"catalogNumber\": 0,\r\n          \"netPrice\": 0,\r\n          \"unit\": \"PIECE\",\r\n          \"taxRate\": \"TAX_RATE_23\"\r\n        },\r\n        \"partialPrice\": 5\r\n      }\r\n    ]\r\n  }\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -157,6 +195,90 @@
 					"path": [
 						"api",
 						"invoices",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read all companies",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/companies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"companies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read all products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read all company products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/companies/1/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"companies",
+						"1",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read all company invoices",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/invoices/seller/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"invoices",
+						"seller",
 						"1"
 					]
 				}

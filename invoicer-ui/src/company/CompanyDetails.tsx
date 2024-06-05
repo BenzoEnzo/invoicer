@@ -4,6 +4,7 @@ import '../shared/style/form.css';
 import Product from "../product/Product";
 import Invoice from "../invoicer/Invoice";
 import {CompanyDTO} from "./model/CompanyDTO";
+import { SelectedProductsProvider } from '../invoicer/service/SelectProductState'
 
 
 function CompanyDetails({ companyDetailData, companyId }: { companyDetailData: CompanyDTO | null, companyId: number }){
@@ -29,8 +30,10 @@ function CompanyDetails({ companyDetailData, companyId }: { companyDetailData: C
                 </div>
             </div>
                 <div className="content">
+                    <SelectedProductsProvider>
                     {activeMenuItem === 'Produkty' && <Product companyId={companyId}/>}
                     {activeMenuItem === 'Faktury' && <Invoice/> }
+                    </SelectedProductsProvider>
                     {activeMenuItem === 'Dane' && companyDetailData != null && (
                         <>                   <h2>Dane prywatne</h2>
                         <div className="content">
@@ -67,6 +70,7 @@ function CompanyDetails({ companyDetailData, companyId }: { companyDetailData: C
                                     <input type="number" id="nip" value={companyDetailData.nip} readOnly/>
                                 </div>
                             </div>
+
                         </div>
                         </>
                     )}

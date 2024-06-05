@@ -32,6 +32,13 @@ public class InvoiceService {
     private final InvoicePriceMapper invoicePriceMapper;
     private final InvoiceItemMapper invoiceItemMapper;
 
+    public List<InvoiceDTO> getSellerInvoices(Long sellerId){
+        return invoiceRepository.findInvoicesBySeller_Id(sellerId)
+                .stream()
+                .map(invoiceMapper::mapToDTO)
+                .toList();
+    }
+
     @Transactional
     public InvoiceDTO create(InvoiceDTO invoiceDTO){
         InvoicePrice invoicePrice = invoicePriceMapper.mapToEntity(invoiceDTO.getInvoicePrice());

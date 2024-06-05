@@ -39,7 +39,9 @@ public class InvoiceService {
         List<InvoiceItem> invoiceItems = invoiceDTO
                 .getInvoicePrice()
                 .getInvoiceItems()
-                .stream().map(invoiceItemMapper::mapToEntity).toList();
+                .stream()
+                .map(invoiceItemMapper::mapToEntity)
+                .toList();
 
         Invoice invoice = invoiceMapper.mapToEntity(invoiceDTO);
         invoice.setInvoicePrice(invoicePrice);
@@ -74,4 +76,6 @@ public class InvoiceService {
 
         invoicePriceRepository.save(invoicePrice);
     }
+
+
 }

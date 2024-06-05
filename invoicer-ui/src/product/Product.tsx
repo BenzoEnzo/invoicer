@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import CompanyAPI from '../company/service/CompanyAPI';
-import {ProductDTO} from './model/ProductDTO';
+import { ProductDTO } from './model/ProductDTO';
 import '../shared/style/table.css';
 import '../shared/style/form.css';
 import '../shared/style/alert.css';
-import {Check2, PlusCircle, Trash} from "react-bootstrap-icons";
+import { Check2, PlusCircle, Trash } from "react-bootstrap-icons";
 import ProductAPI from "./service/ProductAPI";
 import Unit from "./model/Unit";
 import TaxRate from "./model/TaxRate";
-
+import { useSelectedProducts } from '../invoicer/service/SelectProductState';
 
 function Product({ companyId }: { companyId: number }) {
     const [products, setProducts] = useState<ProductDTO[]>([]);
@@ -16,6 +16,7 @@ function Product({ companyId }: { companyId: number }) {
     const [editMode, setEditMode] = useState(false);
     const [alert, setAlert] = useState(false);
     const [newProduct, setNewProduct] = useState<ProductDTO>({
+        id: 0,
         name: '',
         symbol: '',
         catalogNumber: 0,
@@ -24,19 +25,16 @@ function Product({ companyId }: { companyId: number }) {
         taxRate: TaxRate.TAX_RATE_23,
     });
 
+    const { selectedProducts, toggleProduct } = useSelectedProducts();
 
     const handleProductInputChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
     ) => {
         const { name, value } = e.target;
 
-
         setNewProduct((prevProduct) => ({
             ...prevProduct,
-            [name]:
-                name === "catalogNumber" || name === "netPrice"
-                    ? parseFloat(value as string)
-                    : value,
+            [name]: name === "catalogNumber" || name === "netPrice" ? parseFloat(value as string) : value,
         }));
     };
 
@@ -57,14 +55,13 @@ function Product({ companyId }: { companyId: number }) {
         setEditMode(true);
     };
 
-
     const handleAddProduct = async () => {
         try {
             const createdProduct = await ProductAPI.createProduct({
                 id: companyId,
                 name: '',
                 companyProduct: newProduct,
-            })
+            });
             setProducts(prevProducts => [...prevProducts, createdProduct]);
             setAlert(true);
             setEditMode(false);
@@ -78,25 +75,24 @@ function Product({ companyId }: { companyId: number }) {
 
     return (
         <div>
-
-            <div><h2>Produkty firmy</h2>
-             <button onClick={isEditingMode}>Dodaj produkt <PlusCircle className="ml-2" /></button>
+            <div>
+                <h2>Produkty firmy</h2>
+                <button onClick={isEditingMode}>Dodaj produkt <PlusCircle className="ml-2" /></button>
             </div>
 
             <div>
                 {alert && (
                     <div className="alert alert-success" role="alert">
-                        Dodano produkt: {newProduct.name} !
+                        Dodano produkt: {newProduct.name}!
                     </div>
                 )}
                 {error && <p style={{ color: 'red' }}>{error}</p>}
             </div>
 
-
-
-            <table className="table"> {/* Use the 'table' class */}
+            <table className="table">
                 <thead>
                 <tr>
+                    <th>Uwzględnij w fakturze</th>
                     <th>Nazwa</th>
                     <th>Symbol</th>
                     <th>Numer katalogowy</th>
@@ -109,58 +105,48 @@ function Product({ companyId }: { companyId: number }) {
                 <tbody>
                 {editMode && (
                     <tr>
-                        <td><input type="text" name="name" value={newProduct.name}
-                                   onChange={handleProductInputChange}/></td>
-                        <td><input type="text" name="symbol" value={newProduct.symbol}
-                                   onChange={handleProductInputChange}/></td>
-                        <td><input type="text" name="catalogNumber" value={newProduct.catalogNumber}
-                                   onChange={handleProductInputChange}/></td>
-                        <td><input type="number" name="netPrice" value={newProduct.netPrice}
-                                   onChange={handleProductInputChange}/></td>
+                        <td></td>
+                        <td><input type="text" name="name" value={newProduct.name} onChange={handleProductInputChange} /></td>
+                        <td><input type="text" name="symbol" value={newProduct.symbol} onChange={handleProductInputChange} /></td>
+                        <td><input type="text" name="catalogNumber" value={newProduct.catalogNumber} onChange={handleProductInputChange} /></td>
+                        <td><input type="number" name="netPrice" value={newProduct.netPrice} onChange={handleProductInputChange} /></td>
                         <td>
-                            <select
-                                name="unit"
-                                value={newProduct.unit}
-                                onChange={handleProductInputChange}
-                            >
+                            <select name="unit" value={newProduct.unit} onChange={handleProductInputChange}>
                                 {Object.values(Unit).map((unit) => (
-                                    <option key={unit} value={unit}>
-                                        {unit}
-                                    </option>
+                                    <option key={unit} value={unit}>{unit}</option>
                                 ))}
                             </select>
                         </td>
                         <td>
-                            <select
-                                name="taxRate"
-                                value={newProduct.taxRate}
-                                onChange={handleProductInputChange}
-                            >
-                                {Object.values(TaxRate)
-                                    .filter((taxRate) => isNaN(Number(taxRate)))
-                                    .map((taxRate) => (
-                                        <option key={taxRate} value={taxRate}>
-                                            {taxRate}
-                                        </option>
-                                    ))}
+                            <select name="taxRate" value={newProduct.taxRate} onChange={handleProductInputChange}>
+                                {Object.values(TaxRate).filter((taxRate) => isNaN(Number(taxRate))).map((taxRate) => (
+                                    <option key={taxRate} value={taxRate}>{taxRate}</option>
+                                ))}
                             </select>
                         </td>
                         <td>
                             <button onClick={handleAddProduct}>
-                                <Check2 className="ml-2"/>
+                                <Check2 className="ml-2" />
                             </button>
                         </td>
                     </tr>
                 )}
                 {products.map((product) => (
                     <tr key={product.id}>
+                        <td>
+                            <input
+                                type="checkbox"
+                                checked={selectedProducts.some((p) => p.id === product.id)}
+                                onChange={() => toggleProduct(product)}
+                            />
+                        </td>
                         <td>{product.name}</td>
                         <td>{product.symbol}</td>
                         <td>{product.catalogNumber}</td>
                         <td>{product.netPrice.toFixed(2)}</td>
                         <td>{product.unit}</td>
                         <td>{product.taxRate}%</td>
-                        <td><Trash className="ml-2"/></td>
+                        <td><Trash className="ml-2" /></td>
                     </tr>
                 ))}
                 </tbody>

@@ -16,7 +16,6 @@ function Product({ companyId }: { companyId: number }) {
     const [editMode, setEditMode] = useState(false);
     const [alert, setAlert] = useState(false);
     const [newProduct, setNewProduct] = useState<ProductDTO>({
-        id: 0,
         name: '',
         symbol: '',
         catalogNumber: 0,

@@ -11,9 +11,6 @@ import { format } from 'date-fns';
 import ProductAPI from "../product/service/ProductAPI";
 
 function Invoice() {
-    const formatDate = (date:any) => {
-        return date ? format(new Date(date), 'yyyy-MM-dd') : 'N/A';
-    };
     const [customerId, setCustomerId] = useState('');
     const [error, setError] = useState<string | null>(null);
     const [customer, setCustomer] = useState<CompanyDTO>({

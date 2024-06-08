@@ -6,13 +6,14 @@ import { CompanyDTO } from "../company/model/CompanyDTO";
 import CompanyAPI from '../company/service/CompanyAPI';
 import InvoiceAPI from '../invoicer/service/InvoiceAPI';
 import { useSelectedProducts } from './service/SelectProductState';
-import { InvoiceDTO } from './model/InvoiceDTO';
+import { InvoiceDTO, InvoiceItemDTO, InvoicePriceDTO } from './model/InvoiceDTO';
 import { format } from 'date-fns';
 import ProductAPI from "../product/service/ProductAPI";
 
-function Invoice() {
+function Invoice({sellerId} : {sellerId:number}) {
     const [customerId, setCustomerId] = useState('');
     const [error, setError] = useState<string | null>(null);
+    const [quantityProducts, setQuantityProducts] = useState<{ [key: number]: number }>({});
     const [customer, setCustomer] = useState<CompanyDTO>({
         name: '',
         shortName: '',
@@ -30,6 +31,52 @@ function Invoice() {
         setCustomerId(event.target.value);
     };
 
+    const handleQuantityChange = (id:any, value:any) => {
+        setQuantityProducts(prevState => ({
+            ...prevState,
+            [id]: value
+        }));
+    };
+
+
+
+    const handleCreateInvoice = async () => {
+        try {
+            const invoiceItems: InvoiceItemDTO[] = selectedProducts.map((product, index) => ({
+                invoicePosition: index + 1,
+                quantity: quantityProducts[index] ?? 0,
+                discount: 0,
+                product: product,
+                partialPrice: product.netPrice * (quantityProducts[index] ?? 0),
+            }));
+
+            const invoice: InvoiceDTO = {
+                symbol: 'INV123',
+                creationDate: new Date(),
+                saleDate: new Date(),
+                paymentDate: new Date(),
+                seller: {
+                    id: sellerId
+                },
+                customer: customer,
+                invoicePrice: {
+                    netAmount: 0,
+                    vatAmount: 0,
+                    brutAmount: 0,
+                    invoiceItems: invoiceItems
+                }
+            };
+
+            // Wywołanie funkcji createInvoice
+            const createdInvoice = await InvoiceAPI.createInvoice(invoice);
+            console.log('Stworzono fakturę:', createdInvoice);
+            // Aktualizacja stanu faktur po stworzeniu nowej
+            setInvoices((prevInvoices) => [...prevInvoices, createdInvoice]);
+        } catch (error) {
+            console.error('Error creating invoice:', error);
+        }
+    };
+
     const handleCustomerSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
@@ -37,16 +84,6 @@ function Invoice() {
             setCustomer(data);
         } catch (error) {
             setError('Nie znaleziono takiego użytkownika.');
-        }
-    };
-
-    const handleCreateInvoice = async () => {
-        try {
-            const createdProduct = await InvoiceAPI.createInvoice({
-
-            });
-        } catch (error) {
-            console.error('Error creating invoice:', error);
         }
     };
 
@@ -69,7 +106,7 @@ function Invoice() {
         const fetchInvoices = async () => {
             setError(null);
             try {
-                const data = await InvoiceAPI.getSellerInvoices(1);
+                const data = await InvoiceAPI.getSellerInvoices(sellerId);
                 setInvoices(data);
             } catch (error) {
                 setError('Nie udało się pobrać faktur.');
@@ -164,17 +201,26 @@ function Invoice() {
                                         <td>{product.netPrice.toFixed(2)}</td>
                                         <td>{product.unit}</td>
                                         <td>{product.taxRate}%</td>
+                                        <td>
+                                            <input
+                                                type="string"
+                                                id={`quantityProducts-${product.id}`}
+                                                value={quantityProducts[1] || 0}
+                                                onChange={(e) => handleQuantityChange(product.id, e.target.value)}
+                                                required
+                                            />
+                                        </td>
                                     </tr>
                                 ))}
                                 </tbody>
                             </table>
                         </div>
 
-                        <div className="bottom-container">
-                            <button type="submit">Generuj fakturę</button>
-                        </div>
-
+                    <div className="bottom-container">
+                        <button type="submit" onClick={() => handleCreateInvoice()}>Generuj fakturę</button>
                     </div>
+
+                </div>
                 </div>
             </div>
         </>

@@ -9,11 +9,13 @@
 
 .content-container {
     min-height: 60vh;
+    max-height: 70vh;
     min-width: 60vh;
-    overflow: auto;
+    max-width: 70vh;
     border: 5px solid;
     border-image: linear-gradient(to right, green, #138a49) 1;
     padding: 10px;
+    overflow: auto;
     box-sizing: border-box;
     border-radius: 15px;
     background-color: white;
@@ -21,7 +23,7 @@
 }
 
 .content-container .head-container {
-    min-height: 10vh;
+    width: 100%;
     border: 4px solid;
     border-image: linear-gradient(to right, #c7dcc7, #769488) 1;
     margin-bottom: 2vh;
@@ -29,11 +31,14 @@
 
 .content-container .middle-container {
     border: 4px solid;
+    overflow: auto;
     margin-bottom: 1vh;
+    width: 100%;
     border-image: linear-gradient(to right, #c7dcc7, #769488) 1;
 }
 
 .content-container .bottom-container {
+    width: 100%;
     border: 4px solid;
     border-image: linear-gradient(to right, #c7dcc7, #769488) 1;
 }

@@ -145,6 +145,14 @@ function Invoice({sellerId} : {sellerId:number}) {
                                     onChange={handleCustomerIdChange}
                                     required
                                 />
+                                <h3>Symbol faktury:</h3>
+                                <input
+                                    type="number"
+                                    id="customerId"
+                                    value={customerId}
+                                    onChange={handleCustomerIdChange}
+                                    required
+                                />
                                 <button type="submit">OK</button>
                             </div>
                         </form>
@@ -157,9 +165,7 @@ function Invoice({sellerId} : {sellerId:number}) {
                                 <th>Symbol</th>
                                 <th>Sprzedawca</th>
                                 <th>Klient</th>
-                                <th>Kwota netto</th>
-                                <th>Kwota VAT</th>
-                                <th>Kwota brutto</th>
+                                <th>Do zapłaty</th>
                                 <th>Widok</th>
                             </tr>
                             </thead>
@@ -170,8 +176,6 @@ function Invoice({sellerId} : {sellerId:number}) {
                                     <td>{invoice.seller?.name}</td>
                                     <td>{invoice.customer?.name}</td>
                                     <td>{invoice.invoicePrice?.netAmount?.toFixed(2)}</td>
-                                    <td>{invoice.invoicePrice?.vatAmount?.toFixed(2)}</td>
-                                    <td>{invoice.invoicePrice?.brutAmount?.toFixed(2)}</td>
                                     <td>
                                         <button onClick={() => generateInvoice(invoice.id)}>Pobierz</button>
                                     </td>
@@ -189,7 +193,7 @@ function Invoice({sellerId} : {sellerId:number}) {
                         </div>
 
                         <div className="middle-container">
-                            <table className="table">
+                            <table className="table" >
                                 <thead>
                                 <tr>
                                     <th>Nazwa</th>

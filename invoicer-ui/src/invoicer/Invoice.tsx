@@ -46,9 +46,6 @@ function Invoice() {
     const handleCreateInvoice = async () => {
         try {
             const createdProduct = await InvoiceAPI.createInvoice({
-                id: companyId,
-                name: '',
-                companyProduct: newProduct,
             });
         } catch (error) {
             console.error('Error creating invoice:', error);

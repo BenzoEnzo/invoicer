@@ -32,7 +32,7 @@ function CompanyDetails({ companyDetailData, companyId }: { companyDetailData: C
                 <div className="content">
                     <SelectedProductsProvider>
                     {activeMenuItem === 'Produkty' && <Product companyId={companyId}/>}
-                    {activeMenuItem === 'Faktury' && <Invoice/> }
+                    {activeMenuItem === 'Faktury' && <Invoice sellerId={companyId}/> }
                     </SelectedProductsProvider>
                     {activeMenuItem === 'Dane' && companyDetailData != null && (
                         <>                   <h2>Dane prywatne</h2>

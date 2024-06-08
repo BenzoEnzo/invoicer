@@ -6,16 +6,14 @@ import { CompanyDTO } from "../company/model/CompanyDTO";
 import CompanyAPI from '../company/service/CompanyAPI';
 import InvoiceAPI from '../invoicer/service/InvoiceAPI';
 import { useSelectedProducts } from './service/SelectProductState';
-import { InvoiceDTO } from './model/InvoiceDTO';
+import { InvoiceDTO, InvoiceItemDTO, InvoicePriceDTO } from './model/InvoiceDTO';
 import { format } from 'date-fns';
 import ProductAPI from "../product/service/ProductAPI";
 
-function Invoice() {
-    const formatDate = (date:any) => {
-        return date ? format(new Date(date), 'yyyy-MM-dd') : 'N/A';
-    };
+function Invoice({sellerId} : {sellerId:number}) {
     const [customerId, setCustomerId] = useState('');
     const [error, setError] = useState<string | null>(null);
+    const [quantityProducts, setQuantityProducts] = useState<{ [key: number]: number }>({});
     const [customer, setCustomer] = useState<CompanyDTO>({
         name: '',
         shortName: '',
@@ -28,9 +26,59 @@ function Invoice() {
     });
     const [invoices, setInvoices] = useState<InvoiceDTO[]>([]);
     const { selectedProducts } = useSelectedProducts();
-
+    const [quantityPrices, setQuantityPrices] = useState<number[]>(Array(selectedProducts.length).fill(0));
     const handleCustomerIdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCustomerId(event.target.value);
+    };
+
+    const handleQuantityChange = (id: number, value: string) => {
+        setQuantityProducts(prevState => ({
+            ...prevState,
+            [id]: parseInt(value, 10) || 0
+        }));
+
+    };
+
+
+    const handleCreateInvoice = async() => {
+
+        const invoiceItems = selectedProducts.map((selectedItem, index) => {
+            const quantity = quantityPrices[index]
+            const invoiceItem: InvoiceItemDTO = {
+                invoicePosition: index + 1,
+                quantity: quantity,
+                discount: 0,
+                product: selectedItem
+            };
+
+            return invoiceItem;
+        });
+        try {
+            const invoice: InvoiceDTO = {
+                symbol: 'INV123',
+                creationDate: new Date(),
+                saleDate: new Date(),
+                paymentDate: new Date(),
+                seller: {
+                    id: sellerId
+                },
+                customer: customer,
+                invoicePrice: {
+                    netAmount: 0,
+                    vatAmount: 0,
+                    brutAmount: 0,
+                    invoiceItems: invoiceItems
+                }
+            };
+
+            // Wywołanie funkcji createInvoice
+            const createdInvoice = await InvoiceAPI.createInvoice(invoice);
+            console.log('Stworzono fakturę:', createdInvoice);
+            // Aktualizacja stanu faktur po stworzeniu nowej
+            setInvoices((prevInvoices) => [...prevInvoices, createdInvoice]);
+        } catch (error) {
+            console.error('Error creating invoice:', error);
+        }
     };
 
     const handleCustomerSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -43,14 +91,10 @@ function Invoice() {
         }
     };
 
-    const handleCreateInvoice = async () => {
-        try {
-            const createdProduct = await InvoiceAPI.createInvoice({
-
-            });
-        } catch (error) {
-            console.error('Error creating invoice:', error);
-        }
+    const handleQuantityPriceChange = (index: number, value: string) => {
+        const newQuantityPrices = [...quantityPrices];
+        newQuantityPrices[index] = parseInt(value, 10) || 0;
+        setQuantityPrices(newQuantityPrices);
     };
 
     const generateInvoice = async (invoiceId: number | undefined) => {
@@ -72,15 +116,14 @@ function Invoice() {
         const fetchInvoices = async () => {
             setError(null);
             try {
-                const data = await InvoiceAPI.getSellerInvoices(1);
+                const data = await InvoiceAPI.getSellerInvoices(sellerId);
                 setInvoices(data);
             } catch (error) {
                 setError('Nie udało się pobrać faktur.');
             }
         };
-
         fetchInvoices();
-    }, [customerId]);
+    }, [customerId, selectedProducts, quantityProducts]);
 
     return (
         <>
@@ -159,7 +202,7 @@ function Invoice() {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {selectedProducts.map((product) => (
+                                {selectedProducts.map((product, index) => (
                                     <tr key={product.id}>
                                         <td>{product.name}</td>
                                         <td>{product.symbol}</td>
@@ -167,17 +210,26 @@ function Invoice() {
                                         <td>{product.netPrice.toFixed(2)}</td>
                                         <td>{product.unit}</td>
                                         <td>{product.taxRate}%</td>
+                                        <td>
+                                            <input
+                                                type="text"
+                                                id={`quantityPrice-${product.id}`}
+                                                value={quantityPrices[index]}
+                                                onChange={(e) => handleQuantityPriceChange(index, e.target.value)}
+                                                required
+                                            />
+                                        </td>
                                     </tr>
                                 ))}
                                 </tbody>
                             </table>
                         </div>
 
-                        <div className="bottom-container">
-                            <button type="submit">Generuj fakturę</button>
-                        </div>
-
+                    <div className="bottom-container">
+                    <button type="submit" onClick={() => handleCreateInvoice()}>Generuj fakturę</button>
                     </div>
+
+                </div>
                 </div>
             </div>
         </>

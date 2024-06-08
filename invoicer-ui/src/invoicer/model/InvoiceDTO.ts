@@ -12,7 +12,7 @@ export interface InvoiceDTO extends EntityDTO {
     invoicePrice?: InvoicePriceDTO;
 }
 
-interface InvoiceItemDTO extends EntityDTO {
+export interface InvoiceItemDTO extends EntityDTO {
     invoicePosition?: number;
     quantity?: number;
     discount?: number;
@@ -20,7 +20,7 @@ interface InvoiceItemDTO extends EntityDTO {
     partialPrice?: number;
 }
 
-interface InvoicePriceDTO extends EntityDTO {
+export interface InvoicePriceDTO extends EntityDTO {
     netAmount?: number;
     vatAmount?: number;
     brutAmount?: number;

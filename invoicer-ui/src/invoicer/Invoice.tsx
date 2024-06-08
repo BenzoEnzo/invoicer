@@ -26,30 +26,34 @@ function Invoice({sellerId} : {sellerId:number}) {
     });
     const [invoices, setInvoices] = useState<InvoiceDTO[]>([]);
     const { selectedProducts } = useSelectedProducts();
-
+    const [quantityPrices, setQuantityPrices] = useState<number[]>(Array(selectedProducts.length).fill(0));
     const handleCustomerIdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCustomerId(event.target.value);
     };
 
-    const handleQuantityChange = (id:any, value:any) => {
+    const handleQuantityChange = (id: number, value: string) => {
         setQuantityProducts(prevState => ({
             ...prevState,
-            [id]: value
+            [id]: parseInt(value, 10) || 0
         }));
+
     };
 
 
+    const handleCreateInvoice = async() => {
 
-    const handleCreateInvoice = async () => {
-        try {
-            const invoiceItems: InvoiceItemDTO[] = selectedProducts.map((product, index) => ({
+        const invoiceItems = selectedProducts.map((selectedItem, index) => {
+            const quantity = quantityPrices[index]
+            const invoiceItem: InvoiceItemDTO = {
                 invoicePosition: index + 1,
-                quantity: quantityProducts[index] ?? 0,
+                quantity: quantity,
                 discount: 0,
-                product: product,
-                partialPrice: product.netPrice * (quantityProducts[index] ?? 0),
-            }));
+                product: selectedItem
+            };
 
+            return invoiceItem;
+        });
+        try {
             const invoice: InvoiceDTO = {
                 symbol: 'INV123',
                 creationDate: new Date(),
@@ -87,6 +91,12 @@ function Invoice({sellerId} : {sellerId:number}) {
         }
     };
 
+    const handleQuantityPriceChange = (index: number, value: string) => {
+        const newQuantityPrices = [...quantityPrices];
+        newQuantityPrices[index] = parseInt(value, 10) || 0;
+        setQuantityPrices(newQuantityPrices);
+    };
+
     const generateInvoice = async (invoiceId: number | undefined) => {
         setError(null);
         try {
@@ -112,9 +122,8 @@ function Invoice({sellerId} : {sellerId:number}) {
                 setError('Nie udało się pobrać faktur.');
             }
         };
-
         fetchInvoices();
-    }, [customerId]);
+    }, [customerId, selectedProducts, quantityProducts]);
 
     return (
         <>
@@ -193,7 +202,7 @@ function Invoice({sellerId} : {sellerId:number}) {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {selectedProducts.map((product) => (
+                                {selectedProducts.map((product, index) => (
                                     <tr key={product.id}>
                                         <td>{product.name}</td>
                                         <td>{product.symbol}</td>
@@ -203,10 +212,10 @@ function Invoice({sellerId} : {sellerId:number}) {
                                         <td>{product.taxRate}%</td>
                                         <td>
                                             <input
-                                                type="string"
-                                                id={`quantityProducts-${product.id}`}
-                                                value={quantityProducts[1] || 0}
-                                                onChange={(e) => handleQuantityChange(product.id, e.target.value)}
+                                                type="text"
+                                                id={`quantityPrice-${product.id}`}
+                                                value={quantityPrices[index]}
+                                                onChange={(e) => handleQuantityPriceChange(index, e.target.value)}
                                                 required
                                             />
                                         </td>
@@ -217,7 +226,7 @@ function Invoice({sellerId} : {sellerId:number}) {
                         </div>
 
                     <div className="bottom-container">
-                        <button type="submit" onClick={() => handleCreateInvoice()}>Generuj fakturę</button>
+                    <button type="submit" onClick={() => handleCreateInvoice()}>Generuj fakturę</button>
                     </div>
 
                 </div>

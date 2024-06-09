@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ArchivalProduct extends ArchivalEntity<Product> {
+public class ArchivalProduct extends ArchivalEntity {
     private Long id;
     private Company seller;
     private String name;
@@ -25,4 +25,5 @@ public class ArchivalProduct extends ArchivalEntity<Product> {
     private BigDecimal netPrice;
     private Unit unit;
     private TaxRate taxRate;
+    private Product realProduct;
 }

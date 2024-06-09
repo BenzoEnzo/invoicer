@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ArchivalCompany extends ArchivalEntity<Company> {
+public class ArchivalCompany extends ArchivalEntity {
     private Long id;
     private String name;
     private String shortName;
@@ -21,4 +21,5 @@ public class ArchivalCompany extends ArchivalEntity<Company> {
     private String zipCode;
     private String city;
     private Integer nip;
+    private Company realCompany;
 }

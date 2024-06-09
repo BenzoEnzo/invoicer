@@ -1,11 +1,11 @@
 package com.chronica.invoicer.logic;
 
 import com.chronica.invoicer.data.dto.CompanyDTO;
+import com.chronica.invoicer.data.dto.ProductDTO;
 import com.chronica.invoicer.data.entity.Company;
+import com.chronica.invoicer.data.repository.CompanyRepository;
 import com.chronica.invoicer.mapper.CompanyMapper;
 import com.chronica.invoicer.mapper.ProductMapper;
-import com.chronica.invoicer.data.repository.CompanyRepository;
-import com.chronica.invoicer.data.dto.ProductDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +16,7 @@ import java.util.List;
 public class CompanyService {
     private final CompanyRepository companyRepository;
     private final CompanyMapper companyMapper;
+    private final ArchivalCompanyService archivalCompanyService;
 
     public List<CompanyDTO> findAll() {
         return companyRepository.findAll()
@@ -31,10 +32,8 @@ public class CompanyService {
     }
 
     public CompanyDTO create(CompanyDTO companyDTO) {
-        Company company = companyMapper.mapToEntity(companyDTO);
-
-        companyRepository.save(company);
-
+        Company company = companyRepository.save(companyMapper.mapToEntity(companyDTO));
+        archivalCompanyService.createArchivalCompany(company);
         return companyMapper.mapToDTO(company);
     }
 

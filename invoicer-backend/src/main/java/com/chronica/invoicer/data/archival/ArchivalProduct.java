@@ -5,6 +5,7 @@ import com.chronica.invoicer.data.ArchivalEntity;
 import com.chronica.invoicer.data.enumerated.Unit;
 import com.chronica.invoicer.data.entity.Product;
 import com.chronica.invoicer.data.enumerated.TaxRate;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,8 +17,13 @@ import java.math.BigDecimal;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ArchivalProduct extends ArchivalEntity<Product> {
+@Entity
+public class ArchivalProduct extends ArchivalEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "seller_id")
     private Company seller;
     private String name;
     private String symbol;
@@ -25,4 +31,7 @@ public class ArchivalProduct extends ArchivalEntity<Product> {
     private BigDecimal netPrice;
     private Unit unit;
     private TaxRate taxRate;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "realProduct_id")
+    private Product realProduct;
 }

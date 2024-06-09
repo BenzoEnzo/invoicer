@@ -53,7 +53,7 @@ public class InvoiceService {
         invoicePrice.setInvoice(invoice);
 
         calculatePartialCost(invoicePrice);
-        calculatePriceNetto(invoicePrice);
+        calculateNettPrice(invoicePrice);
 
         invoiceRepository.save(invoice);
 
@@ -70,7 +70,7 @@ public class InvoiceService {
         invoiceItemRepository.saveAll(invoiceItems);
     }
 
-    private void calculatePriceNetto(InvoicePrice invoicePrice){
+    private void calculateNettPrice(InvoicePrice invoicePrice){
         invoicePrice.setNetAmount(invoicePrice
                 .getInvoiceItems()
                 .stream()

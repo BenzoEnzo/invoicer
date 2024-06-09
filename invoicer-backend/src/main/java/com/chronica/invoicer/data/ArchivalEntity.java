@@ -11,8 +11,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class ArchivalEntity<T extends BaseEntity> {
-    private T realEntity;
+public abstract class ArchivalEntity {
     private Date createdAt;
     private Integer version;
 }

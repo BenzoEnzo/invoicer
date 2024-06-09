@@ -26,6 +26,7 @@ public class CompanyController {
     public ResponseEntity<CompanyDTO> getCompanyById(@PathVariable Long id) {
         return new ResponseEntity<>(companyService.findById(id), HttpStatus.OK);
     }
+
     @GetMapping("/{id}/products")
     public ResponseEntity<List<ProductDTO>> getCompanyProducts(@PathVariable Long id){
         return new ResponseEntity<>(companyService.getCompanyProducts(id),HttpStatus.OK);

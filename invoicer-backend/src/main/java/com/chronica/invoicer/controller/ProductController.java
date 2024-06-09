@@ -1,7 +1,6 @@
 package com.chronica.invoicer.controller;
 
 
-import com.chronica.invoicer.data.dto.CompanyProductDTO;
 import com.chronica.invoicer.data.dto.ProductDTO;
 import com.chronica.invoicer.logic.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +30,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductDTO> createProduct(@RequestBody CompanyProductDTO product) {
+    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO product) {
         ProductDTO productSaved = productService.create(product);
         return new ResponseEntity<>(productSaved, HttpStatus.CREATED);
     }

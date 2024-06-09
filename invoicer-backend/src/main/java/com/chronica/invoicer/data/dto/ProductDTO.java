@@ -21,4 +21,5 @@ public class ProductDTO extends EntityDTO {
     private BigDecimal netPrice;
     private Unit unit;
     private TaxRate taxRate;
+    private CompanyInfoDTO companyInfo;
 }

@@ -8,5 +8,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ArchivalCompanyMapper {
     @Mapping(target = "realCompany", source = "company")
+    @Mapping(target = "id", ignore = true)
     ArchivalCompany mapCompanyToArchivalCompany(Company company);
 }

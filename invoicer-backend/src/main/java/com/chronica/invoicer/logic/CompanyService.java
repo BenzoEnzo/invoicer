@@ -17,6 +17,7 @@ public class CompanyService {
     private final CompanyRepository companyRepository;
     private final CompanyMapper companyMapper;
     private final ArchivalCompanyService archivalCompanyService;
+    private final ProductMapper productMapper;
 
     public List<CompanyDTO> findAll() {
         return companyRepository.findAll()
@@ -37,16 +38,12 @@ public class CompanyService {
         return companyMapper.mapToDTO(company);
     }
 
-    public void save(Company company){
-        companyRepository.save(company);
-    }
-
     public List<ProductDTO> getCompanyProducts(Long id){
         return companyRepository.findById(id)
                 .get()
                 .getCompanyProducts()
                 .stream()
-                .map(ProductMapper.INSTANCE::mapToDTO)
+                .map(productMapper::mapToDTO)
                 .toList();
     }
 }

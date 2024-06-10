@@ -38,6 +38,14 @@ public class CompanyService {
         return companyMapper.mapToDTO(company);
     }
 
+    public CompanyDTO update(Long id, CompanyDTO companyDTO) {
+        Company updatedCompany = companyRepository.findById(id)
+                .map(company -> companyMapper.mapToUpdateEntity(company, companyDTO))
+                .orElseThrow();
+        archivalCompanyService.createArchivalCompany(updatedCompany);
+        return companyMapper.mapToDTO(updatedCompany);
+    }
+
     public List<ProductDTO> getCompanyProducts(Long id){
         return companyRepository.findById(id)
                 .get()

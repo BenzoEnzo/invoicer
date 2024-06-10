@@ -8,8 +8,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface InvoicePriceMapper {
     @Mapping(target = "id", ignore = true)
-    InvoicePrice mapToEntity(InvoicePriceDTO invoicePriceDTO);
-
     InvoicePriceDTO mapToDTO(InvoicePrice invoicePrice);
 }
 

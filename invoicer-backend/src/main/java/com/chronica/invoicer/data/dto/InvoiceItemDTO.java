@@ -1,11 +1,11 @@
 package com.chronica.invoicer.data.dto;
 
 import com.chronica.invoicer.data.EntityDTO;
-import com.chronica.invoicer.data.dto.ProductDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.math.BigDecimal;
 
 
@@ -14,9 +14,9 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InvoiceItemDTO extends EntityDTO {
-    private Integer invoicePosition;
+    private Integer itemPosition;
     private BigDecimal quantity;
     private BigDecimal discount;
-    private ProductDTO product;
+    private ProductDTO archivalProduct;
     private BigDecimal partialPrice;
 }

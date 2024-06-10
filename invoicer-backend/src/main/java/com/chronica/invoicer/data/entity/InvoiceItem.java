@@ -1,6 +1,7 @@
 package com.chronica.invoicer.data.entity;
 
 import com.chronica.invoicer.data.BaseEntity;
+import com.chronica.invoicer.data.archival.ArchivalProduct;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,10 +25,10 @@ public class InvoiceItem implements BaseEntity {
     private BigDecimal partialPrice;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @JoinColumn(name = "archival_product_id")
+    private ArchivalProduct archivalProduct;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "price_id")
-    private InvoicePrice invoicePrice;
+    @JoinColumn(name = "invoice_id")
+    private Invoice invoice;
 }

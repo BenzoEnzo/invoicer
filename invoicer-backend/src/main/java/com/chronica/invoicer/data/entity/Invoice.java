@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,6 +25,9 @@ public class Invoice implements BaseEntity {
     private Date paymentDate;
     @OneToOne(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
     private InvoicePrice invoicePrice;
+
+    @OneToMany(mappedBy="invoice", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<InvoiceItem> invoiceItems;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "seller_id")

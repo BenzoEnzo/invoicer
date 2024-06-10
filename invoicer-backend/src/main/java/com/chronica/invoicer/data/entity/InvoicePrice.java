@@ -19,9 +19,9 @@ public class InvoicePrice implements BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private BigDecimal netAmount;
-    private BigDecimal vatAmount;
-    private BigDecimal brutAmount;
+    private BigDecimal netAmount = BigDecimal.ZERO;
+    private BigDecimal vatAmount = BigDecimal.ZERO;
+    private BigDecimal brutAmount = BigDecimal.ZERO;
 
     @OneToMany
     private List<InvoiceItem> invoiceItems;

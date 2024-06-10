@@ -6,7 +6,11 @@ import com.chronica.invoicer.data.entity.Invoice;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",
+        uses = {
+                InvoiceItemMapper.class,
+                InvoicePriceMapper.class
+        })
 public interface InvoiceMapper {
     @Mapping(target = "id", ignore = true)
     Invoice mapToEntity(InvoiceDTO invoiceDTO);

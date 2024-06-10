@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,5 +20,6 @@ public class InvoiceDTO extends EntityDTO {
     private Date paymentDate;
     private CompanyDTO seller;
     private CompanyDTO customer;
+    private List<InvoiceItemDTO> invoiceItems;
     private InvoicePriceDTO invoicePrice;
 }

@@ -17,7 +17,7 @@ public class ArchivalProductService {
 
     public void createArchivalProduct(Product product) {
         ArchivalProduct archivalProduct = archivalProductMapper.mapProductToArchival(product);
-        archivalProduct.setVersion(archivalProductRepository.countAllByRealProductId(product.getId()));
+        archivalProduct.setVersion(archivalProductRepository.countAllByRealProductId(product.getId()) + 1);
         archivalProduct.setCreatedAt(new Date());
         archivalProductRepository.save(archivalProduct);
     }

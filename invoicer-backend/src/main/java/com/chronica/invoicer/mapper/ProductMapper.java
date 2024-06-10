@@ -8,6 +8,7 @@ import com.chronica.invoicer.data.entity.Product;
 import com.chronica.invoicer.data.repository.CompanyRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(componentModel = "spring",
@@ -17,8 +18,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 public abstract class ProductMapper  {
     private CompanyRepository companyRepository;
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "company", expression = "java(getCompany(productDTO.getCompanyInfo()))")
     public abstract Product mapToEntity(ProductDTO productDTO);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "company", expression = "java(getCompany(productDTO.getCompanyInfo()))")
+    public abstract Product mapToUpdateEntity(@MappingTarget Product toUpdate, ProductDTO productDTO);
 
     @Mapping(target = "companyInfo", expression = "java(getCompanyInfo(product.getCompany()))")
     public abstract ProductDTO mapToDTO(Product product);

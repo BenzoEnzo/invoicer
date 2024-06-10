@@ -33,4 +33,12 @@ public class ProductService {
         archivalProductService.createArchivalProduct(product);
         return productMapper.mapToDTO(product);
     }
+
+    public ProductDTO update(Long id, ProductDTO product) {
+        Product updatedProduct = productRepository.findById(id)
+                .map(toUpdate -> productMapper.mapToUpdateEntity(toUpdate, product))
+                .orElseThrow();
+        archivalProductService.createArchivalProduct(updatedProduct);
+        return productMapper.mapToDTO(updatedProduct);
+    }
 }

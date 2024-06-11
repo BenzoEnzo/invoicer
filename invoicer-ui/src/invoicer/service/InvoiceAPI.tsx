@@ -1,6 +1,5 @@
 import axios from 'axios';
 import {InvoiceDTO} from '../model/InvoiceDTO'
-import {CompanyProductDTO} from "../../product/model/CompanyProductDTO";
 import {ProductDTO} from "../../product/model/ProductDTO";
 
 const API_INVOICE_URL = '/api/invoices';

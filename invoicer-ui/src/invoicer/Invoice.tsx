@@ -7,8 +7,6 @@ import CompanyAPI from '../company/service/CompanyAPI';
 import InvoiceAPI from '../invoicer/service/InvoiceAPI';
 import { useSelectedProducts } from './service/SelectProductState';
 import { InvoiceDTO, InvoiceItemDTO, InvoicePriceDTO } from './model/InvoiceDTO';
-import { format } from 'date-fns';
-import ProductAPI from "../product/service/ProductAPI";
 
 function Invoice({sellerId} : {sellerId:number}) {
     const [customerId, setCustomerId] = useState('');
@@ -123,6 +121,7 @@ function Invoice({sellerId} : {sellerId:number}) {
             }
         };
         fetchInvoices();
+
     }, [customerId, selectedProducts, quantityProducts]);
 
     return (

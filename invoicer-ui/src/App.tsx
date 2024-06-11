@@ -1,7 +1,9 @@
 import React from 'react';
 import './App.css';
+import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Company from './company/Company'
+import {ToastContainer} from "react-toastify";
 
 function App() {
   return (
@@ -25,6 +27,7 @@ function App() {
 
             <footer className="footer">
             </footer>
+            <ToastContainer />
         </div>
     </BrowserRouter>
   );

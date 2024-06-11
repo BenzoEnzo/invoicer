@@ -1,5 +1,6 @@
 import TaxRate from "./TaxRate";
 import Unit from "./Unit";
+import {CompanyInfoDTO} from "./CompanyInfoDTO";
 
 export interface ProductDTO {
     id?: number;
@@ -9,4 +10,5 @@ export interface ProductDTO {
     netPrice: number;
     unit: Unit;
     taxRate: TaxRate;
+    companyInfo: CompanyInfoDTO;
 }

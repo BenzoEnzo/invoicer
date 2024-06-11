@@ -1,15 +1,17 @@
 import {ProductDTO} from "./model/ProductDTO";
-import {Check2, Pen, Trash} from "react-bootstrap-icons";
+import {ArrowReturnLeft, Check2, Grid, Pen, Trash, XLg} from "react-bootstrap-icons";
 import React, {useCallback} from "react";
 import Unit from "./model/Unit";
 import TaxRate from "./model/TaxRate";
 import ProductAPI from "./service/ProductAPI";
+import {toast} from "react-toastify";
 
 interface ProductEditRowProps{
     product: ProductDTO,
     setProduct: React.Dispatch<React.SetStateAction<ProductDTO>>,
     updateProducts: React.Dispatch<React.SetStateAction<ProductDTO[]>>,
-    resetProduct: () => void
+    resetProduct: () => void,
+    invalidateProducts?: () => void
 }
 
 function ProductEditRow(props: ProductEditRowProps) {
@@ -37,25 +39,28 @@ function ProductEditRow(props: ProductEditRowProps) {
                         if (productToUpdate.id === props.product.id) {
                             return updatedProduct;
                         }
-                        return productToUpdate;
+                        return productToUpdate
                     }));
-                    props.resetProduct();
-                });
+                    toast.success("Zaktualizowano produkt!");
+                })
+                .catch(() => toast.error("Nie udało się zaktualizować produktu!"));
         } else {
             ProductAPI.createProduct(props.product)
                 .then(createdProduct => {
                     props.updateProducts(prevProducts => [...prevProducts, createdProduct]);
-                    // setAlert(true);
-                    // setEditMode(false);
-                    // setTimeout(() => {
-                    //     setAlert(false);
-                    // }, 1500);
+                    toast.success("Utworzono nowy produkt")
                 })
-                .catch(() => {});
+                .catch(() => toast.error("Nie udało się utworzyć produktu!"));
         }
+        props.resetProduct();
     }, [props.product]);
 
-
+    const onReject = useCallback(() => {
+        if(props.product.id) {
+            props.invalidateProducts;
+        }
+        props.resetProduct();
+    }, [props.product.id, props.resetProduct]);
 
     return (
         <tr>
@@ -112,6 +117,9 @@ function ProductEditRow(props: ProductEditRowProps) {
             <td>
                 <button onClick={onSubmit}>
                     <Check2 className="ml-2"/>
+                </button>
+                <button onClick={onReject}>
+                    <XLg className="ml-2"/>
                 </button>
             </td>
         </tr>

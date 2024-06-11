@@ -6,6 +6,7 @@ import '../shared/style/alert.css';
 import ProductsTable from "./ProductsTable";
 
 function Product({ companyId }: { companyId: number }) {
+
     const [error, setError] = useState<string | null>(null);
 
     const [alert, setAlert] = useState(false);

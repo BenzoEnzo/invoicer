@@ -34,6 +34,7 @@ function ProductsTable(props: ProductsTableProps) {
 
     const resetNewProduct = useCallback(() => {
         setNewProduct(emptyProduct);
+        setCreationMode(false);
     }, [setNewProduct, emptyProduct]);
 
     const resetProductToEdit = useCallback(() => {
@@ -55,10 +56,14 @@ function ProductsTable(props: ProductsTableProps) {
     },[])
 
     useEffect(() => {
+        fetchProducts();
+    }, [props.companyId])
+
+    function fetchProducts() {
         CompanyAPI.getCompanyProducts(props.companyId)
             .then(fetchedProducts => setProducts(fetchedProducts))
             .catch(() => setProducts([]));
-    }, [props.companyId])
+    }
 
     return (
         <>
@@ -91,6 +96,7 @@ function ProductsTable(props: ProductsTableProps) {
                                     setProduct={setProductToEdit}
                                     updateProducts={setProducts}
                                     resetProduct={resetProductToEdit}
+                                    invalidateProducts={fetchProducts}
                                 />
                             ) : (
                                 <ProductRow

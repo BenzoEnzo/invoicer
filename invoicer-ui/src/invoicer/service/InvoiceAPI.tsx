@@ -30,7 +30,7 @@ class InvoiceAPI {
 
     async createInvoice(invoice: InvoiceDTO): Promise<InvoiceDTO> {
         try {
-            const response = await axios.post<ProductDTO>(API_INVOICE_URL, invoice);
+            const response = await axios.post<InvoiceDTO>(API_INVOICE_URL, invoice);
             return response.data;
         } catch (error) {
             // More specific error handling (optional)

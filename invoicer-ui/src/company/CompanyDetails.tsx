@@ -5,6 +5,7 @@ import Product from "../product/Product";
 import Invoice from "../invoicer/Invoice";
 import {CompanyDTO} from "./model/CompanyDTO";
 import { SelectedProductsProvider } from '../invoicer/service/SelectProductState'
+import CreateInvoiceForm from "../invoicer/CreateInvoiceForm";
 
 
 function CompanyDetails({ companyDetailData, companyId }: { companyDetailData: CompanyDTO | null, companyId: number }){
@@ -32,7 +33,7 @@ function CompanyDetails({ companyDetailData, companyId }: { companyDetailData: C
                 <div className="content">
                     <SelectedProductsProvider>
                     {activeMenuItem === 'Produkty' && <Product companyId={companyId}/>}
-                    {activeMenuItem === 'Faktury' && <Invoice sellerId={companyId}/> }
+                    {activeMenuItem === 'Faktury' && <CreateInvoiceForm companyId={companyId}/> }
                     </SelectedProductsProvider>
                     {activeMenuItem === 'Dane' && companyDetailData != null && (
                         <>                   <h2>Dane prywatne</h2>

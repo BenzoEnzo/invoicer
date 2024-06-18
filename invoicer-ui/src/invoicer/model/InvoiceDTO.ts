@@ -4,9 +4,9 @@ import {EntityDTO} from "../../shared/model/EntityDTO";
 
 export interface InvoiceDTO extends EntityDTO {
     symbol?: string;
-    creationDate?: Date;
-    saleDate?: Date;
-    paymentDate?: Date;
+    creationDate?: string;
+    saleDate?: string;
+    paymentDate?: string;
     seller?: CompanyDTO;
     customer?: CompanyDTO;
     invoicePrice?: InvoicePriceDTO;

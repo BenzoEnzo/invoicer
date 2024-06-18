@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import '../shared/style/form.css';
 import '../shared/style/container.css';
 import '../shared/style/table.css';
-import { CompanyDTO } from "../company/model/CompanyDTO";
-import CompanyAPI from '../company/service/CompanyAPI';
+import {CompanyDTO} from "../company/model/CompanyDTO";
 import InvoiceAPI from '../invoicer/service/InvoiceAPI';
-import { useSelectedProducts } from './service/SelectProductState';
-import { InvoiceDTO, InvoiceItemDTO, InvoicePriceDTO } from './model/InvoiceDTO';
+import {useSelectedProducts} from './service/SelectProductState';
+import {InvoiceDTO, InvoiceItemDTO} from './model/InvoiceDTO';
 
 function Invoice({sellerId} : {sellerId:number}) {
     const [customerId, setCustomerId] = useState('');
-    const [error, setError] = useState<string | null>(null);
     const [quantityProducts, setQuantityProducts] = useState<{ [key: number]: number }>({});
     const [customer, setCustomer] = useState<CompanyDTO>({
         name: '',
@@ -25,18 +23,6 @@ function Invoice({sellerId} : {sellerId:number}) {
     const [invoices, setInvoices] = useState<InvoiceDTO[]>([]);
     const { selectedProducts } = useSelectedProducts();
     const [quantityPrices, setQuantityPrices] = useState<number[]>(Array(selectedProducts.length).fill(0));
-    const handleCustomerIdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setCustomerId(event.target.value);
-    };
-
-    const handleQuantityChange = (id: number, value: string) => {
-        setQuantityProducts(prevState => ({
-            ...prevState,
-            [id]: parseInt(value, 10) || 0
-        }));
-
-    };
-
 
     const handleCreateInvoice = async() => {
 
@@ -79,16 +65,6 @@ function Invoice({sellerId} : {sellerId:number}) {
         }
     };
 
-    const handleCustomerSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        try {
-            const data = await CompanyAPI.getCompanyById(parseInt(customerId, 10));
-            setCustomer(data);
-        } catch (error) {
-            setError('Nie znaleziono takiego użytkownika.');
-        }
-    };
-
     const handleQuantityPriceChange = (index: number, value: string) => {
         const newQuantityPrices = [...quantityPrices];
         newQuantityPrices[index] = parseInt(value, 10) || 0;
@@ -96,7 +72,6 @@ function Invoice({sellerId} : {sellerId:number}) {
     };
 
     const generateInvoice = async (invoiceId: number | undefined) => {
-        setError(null);
         try {
             const blob = await InvoiceAPI.generateInvoice(invoiceId);
             const url = window.URL.createObjectURL(blob);
@@ -106,18 +81,17 @@ function Invoice({sellerId} : {sellerId:number}) {
             a.click();
             window.URL.revokeObjectURL(url);
         } catch (error) {
-            setError('Błąd generowania faktury');
+
         }
     };
 
     useEffect(() => {
         const fetchInvoices = async () => {
-            setError(null);
             try {
                 const data = await InvoiceAPI.getSellerInvoices(sellerId);
                 setInvoices(data);
             } catch (error) {
-                setError('Nie udało się pobrać faktur.');
+
             }
         };
         fetchInvoices();
@@ -127,112 +101,85 @@ function Invoice({sellerId} : {sellerId:number}) {
     return (
         <>
             <div>
-                <h2>Tworzenie faktury</h2>
+                <h2>Faktury</h2>
+            </div>
+            <div className="main-container">
+                <div className="additional-container">
+                    <h3>Lista wystawionych faktur:</h3>
+                    <table className="table">
+                        <thead>
+                        <tr>
+                            <th>Symbol</th>
+                            <th>Sprzedawca</th>
+                            <th>Klient</th>
+                            <th>Do zapłaty</th>
+                            <th>Widok</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {invoices.map((invoice) => (
+                            <tr key={invoice.id}>
+                                <td>{invoice.symbol}</td>
+                                <td>{invoice.seller?.name}</td>
+                                <td>{invoice.customer?.name}</td>
+                                <td>{invoice.invoicePrice?.netAmount?.toFixed(2)}</td>
+                                <td>
+                                    <button onClick={() => generateInvoice(invoice.id)}>Pobierz</button>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-            <div className="main-container">
-
-                <div className="additional-container">
-                    <div className="little-container">
-                        <form onSubmit={handleCustomerSubmit}>
-                            <div className="input-form">
-                                <h3>Dla kogo:</h3>
-                                <input
-                                    type="number"
-                                    id="customerId"
-                                    value={customerId}
-                                    onChange={handleCustomerIdChange}
-                                    required
-                                />
-                                <h3>Symbol faktury:</h3>
-                                <input
-                                    type="number"
-                                    id="customerId"
-                                    value={customerId}
-                                    onChange={handleCustomerIdChange}
-                                    required
-                                />
-                                <button type="submit">OK</button>
-                            </div>
-                        </form>
+            <div className="additional-container">
+                <div className="content-container">
+                    <div className="head-container">
+                        <center><h2>{customer.name}</h2></center>
                     </div>
-                    <div className="little-container">
-                        <h3>Lista wystawionych faktur:</h3>
+
+                    <div className="middle-container">
                         <table className="table">
                             <thead>
                             <tr>
+                                <th>Nazwa</th>
                                 <th>Symbol</th>
-                                <th>Sprzedawca</th>
-                                <th>Klient</th>
-                                <th>Do zapłaty</th>
-                                <th>Widok</th>
+                                <th>Numer katalogowy</th>
+                                <th>Cena netto</th>
+                                <th>Jednostka</th>
+                                <th>Stawka VAT</th>
+                                <th>Ilość</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {invoices.map((invoice) => (
-                                <tr key={invoice.id}>
-                                    <td>{invoice.symbol}</td>
-                                    <td>{invoice.seller?.name}</td>
-                                    <td>{invoice.customer?.name}</td>
-                                    <td>{invoice.invoicePrice?.netAmount?.toFixed(2)}</td>
+                            {selectedProducts.map((product, index) => (
+                                <tr key={product.id}>
+                                    <td>{product.name}</td>
+                                    <td>{product.symbol}</td>
+                                    <td>{product.catalogNumber}</td>
+                                    <td>{product.netPrice.toFixed(2)}</td>
+                                    <td>{product.unit}</td>
+                                    <td>{product.taxRate}%</td>
                                     <td>
-                                        <button onClick={() => generateInvoice(invoice.id)}>Pobierz</button>
+                                        <input
+                                            type="text"
+                                            id={`quantityPrice-${product.id}`}
+                                            value={quantityPrices[index]}
+                                            onChange={(e) => handleQuantityPriceChange(index, e.target.value)}
+                                            required
+                                        />
                                     </td>
                                 </tr>
                             ))}
                             </tbody>
                         </table>
                     </div>
-                </div>
-
-                <div className="additional-container">
-                <div className="content-container">
-                        <div className="head-container">
-                            <center><h2>{customer.name}</h2></center>
-                        </div>
-
-                        <div className="middle-container">
-                            <table className="table" >
-                                <thead>
-                                <tr>
-                                    <th>Nazwa</th>
-                                    <th>Symbol</th>
-                                    <th>Numer katalogowy</th>
-                                    <th>Cena netto</th>
-                                    <th>Jednostka</th>
-                                    <th>Stawka VAT</th>
-                                    <th>Ilość</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {selectedProducts.map((product, index) => (
-                                    <tr key={product.id}>
-                                        <td>{product.name}</td>
-                                        <td>{product.symbol}</td>
-                                        <td>{product.catalogNumber}</td>
-                                        <td>{product.netPrice.toFixed(2)}</td>
-                                        <td>{product.unit}</td>
-                                        <td>{product.taxRate}%</td>
-                                        <td>
-                                            <input
-                                                type="text"
-                                                id={`quantityPrice-${product.id}`}
-                                                value={quantityPrices[index]}
-                                                onChange={(e) => handleQuantityPriceChange(index, e.target.value)}
-                                                required
-                                            />
-                                        </td>
-                                    </tr>
-                                ))}
-                                </tbody>
-                            </table>
-                        </div>
 
                     <div className="bottom-container">
-                    <button type="submit" onClick={() => handleCreateInvoice()}>Generuj fakturę</button>
+                        <button type="submit" onClick={() => handleCreateInvoice()}>Generuj fakturę</button>
                     </div>
 
-                </div>
                 </div>
             </div>
         </>

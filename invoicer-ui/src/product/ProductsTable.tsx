@@ -101,6 +101,7 @@ function ProductsTable(props: ProductsTableProps) {
                                 <ProductRow
                                     product={product}
                                     updateProductToUpdate={updateProductToUpdate}
+                                    invalidateProducts={fetchProducts}
                                 />
                             )}
                         </>

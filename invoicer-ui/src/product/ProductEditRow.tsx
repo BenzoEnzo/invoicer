@@ -56,8 +56,8 @@ function ProductEditRow(props: ProductEditRowProps) {
     }, [props.product]);
 
     const onReject = useCallback(() => {
-        if(props.product.id) {
-            props.invalidateProducts;
+        if(props.product.id && props.invalidateProducts) {
+            props.invalidateProducts();
         }
         props.resetProduct();
     }, [props.product.id, props.resetProduct]);

@@ -1,13 +1,26 @@
 import {ProductDTO} from "./model/ProductDTO";
 import {Check2, Pen, Trash} from "react-bootstrap-icons";
-import React from "react";
+import React, {useCallback} from "react";
+import axios from "axios";
+import ProductAPI from "./service/ProductAPI";
+import {toast} from "react-toastify";
 
 interface ProductRowProps{
     product: ProductDTO,
     updateProductToUpdate: (product: ProductDTO) => void,
+    invalidateProducts: () => void
 }
 
 function ProductRow(props: ProductRowProps) {
+    const deleteProduct = useCallback(() => {
+        axios.delete(`/api/products/${props.product.id}`)
+            .then(() => {
+                toast.success("Usunięto produkt");
+                props.invalidateProducts();
+            })
+            .catch(() => toast.error("Wystąpił błąd podczas próby usunięcia produktu!"))
+    }, []);
+
     return (
         <tr key={props.product.id}>
             <td>{props.product.name}</td>
@@ -20,7 +33,7 @@ function ProductRow(props: ProductRowProps) {
                 <button onClick={() => props.updateProductToUpdate(props.product)}>
                     <Pen className="ml-2"/>
                 </button>
-                <button onClick={() => {}}>
+                <button onClick={() => deleteProduct()}>
                     <Trash className="ml-2"/>
                 </button>
             </td>

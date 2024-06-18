@@ -45,4 +45,9 @@ public class ProductController {
     public ResponseEntity<String> deprecateProduct(@PathVariable Long id) {
         return ResponseEntity.ok(productService.deprecateProduct(id));
     }
+
+    @GetMapping("/company/{id}")
+    public ResponseEntity<List<ProductDTO>> getCompanyProducts(@PathVariable Long id){
+        return ResponseEntity.ok(productService.getCompanyProducts(id));
+    }
 }

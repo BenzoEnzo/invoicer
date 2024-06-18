@@ -1,11 +1,9 @@
 package com.chronica.invoicer.logic;
 
 import com.chronica.invoicer.data.dto.CompanyDTO;
-import com.chronica.invoicer.data.dto.ProductDTO;
 import com.chronica.invoicer.data.entity.Company;
 import com.chronica.invoicer.data.repository.CompanyRepository;
 import com.chronica.invoicer.mapper.CompanyMapper;
-import com.chronica.invoicer.mapper.ProductMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +15,6 @@ public class CompanyService {
     private final CompanyRepository companyRepository;
     private final CompanyMapper companyMapper;
     private final ArchivalCompanyService archivalCompanyService;
-    private final ProductMapper productMapper;
 
     public List<CompanyDTO> findAll() {
         return companyRepository.findAll()
@@ -44,15 +41,5 @@ public class CompanyService {
                 .orElseThrow();
         archivalCompanyService.createArchivalCompany(updatedCompany);
         return companyMapper.mapToDTO(updatedCompany);
-    }
-
-    public List<ProductDTO> getCompanyProducts(Long id){
-        return companyRepository.findById(id)
-                .get()
-                .getCompanyProducts()
-                .stream()
-                .filter(product -> !product.isDeprecated())
-                .map(productMapper::mapToDTO)
-                .toList();
     }
 }

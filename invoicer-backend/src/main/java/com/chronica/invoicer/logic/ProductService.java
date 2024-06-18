@@ -53,4 +53,10 @@ public class ProductService {
         productRepository.save(product);
         return "Product has been deprecated";
     }
+
+    public List<ProductDTO> getCompanyProducts(Long id) {
+        return productRepository.findAllByCompanyIdAndDeprecatedFalse(id).stream()
+                .map(productMapper::mapToDTO)
+                .toList();
+    }
 }

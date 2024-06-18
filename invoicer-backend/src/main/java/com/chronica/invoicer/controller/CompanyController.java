@@ -1,7 +1,6 @@
 package com.chronica.invoicer.controller;
 
 import com.chronica.invoicer.data.dto.CompanyDTO;
-import com.chronica.invoicer.data.dto.ProductDTO;
 import com.chronica.invoicer.logic.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,11 +23,6 @@ public class CompanyController {
     @GetMapping("/{id}")
     public ResponseEntity<CompanyDTO> getCompanyById(@PathVariable Long id) {
         return ResponseEntity.ok(companyService.findById(id));
-    }
-
-    @GetMapping("/{id}/products")
-    public ResponseEntity<List<ProductDTO>> getCompanyProducts(@PathVariable Long id){
-        return ResponseEntity.ok(companyService.getCompanyProducts(id));
     }
 
     @PostMapping

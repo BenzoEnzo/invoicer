@@ -31,6 +31,15 @@ class ProductAPI {
             }
         }
     }
+
+    async getCompanyProducts(companyId: number): Promise<ProductDTO[]> {
+        try {
+            const response = await axios.get<ProductDTO[]>(`${API_PRODUCT_URL}/company/${companyId}`);
+            return response.data;
+        } catch (error) {
+            throw new Error('Błąd podczas pobierania produktów firmy.');
+        }
+    }
 }
 
 export default new ProductAPI();

@@ -26,6 +26,7 @@ public class Product implements BaseEntity {
     private BigDecimal netPrice;
     private Unit unit;
     private TaxRate taxRate;
+    private boolean deprecated;
 
     @ManyToOne
     @JoinColumn(name = "company_id")

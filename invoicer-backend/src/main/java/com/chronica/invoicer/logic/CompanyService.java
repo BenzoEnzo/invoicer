@@ -51,6 +51,7 @@ public class CompanyService {
                 .get()
                 .getCompanyProducts()
                 .stream()
+                .filter(product -> !product.isDeprecated())
                 .map(productMapper::mapToDTO)
                 .toList();
     }

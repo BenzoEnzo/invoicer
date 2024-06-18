@@ -41,4 +41,16 @@ public class ProductService {
         archivalProductService.createArchivalProduct(updatedProduct);
         return productMapper.mapToDTO(updatedProduct);
     }
+
+    public String deprecateProduct(Long id) {
+        return productRepository.findById(id)
+                .map(this::deprecateProduct)
+                .orElseThrow();
+    }
+
+    private String deprecateProduct(Product product) {
+        product.setDeprecated(true);
+        productRepository.save(product);
+        return "Product has been deprecated";
+    }
 }

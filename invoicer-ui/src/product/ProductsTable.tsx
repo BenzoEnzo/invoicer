@@ -1,9 +1,8 @@
-import {Check2, Pen, PlusCircle, Trash} from "react-bootstrap-icons";
+import {PlusCircle} from "react-bootstrap-icons";
 import Unit from "./model/Unit";
 import TaxRate from "./model/TaxRate";
 import React, {useCallback, useEffect, useState} from "react";
 import {ProductDTO} from "./model/ProductDTO";
-import CompanyAPI from "../company/service/CompanyAPI";
 import ProductRow from "./ProductRow";
 import ProductAPI from "./service/ProductAPI";
 import ProductEditRow from "./ProductEditRow";
@@ -60,7 +59,7 @@ function ProductsTable(props: ProductsTableProps) {
     }, [props.companyId])
 
     function fetchProducts() {
-        CompanyAPI.getCompanyProducts(props.companyId)
+        ProductAPI.getCompanyProducts(props.companyId)
             .then(fetchedProducts => setProducts(fetchedProducts))
             .catch(() => setProducts([]));
     }
@@ -102,6 +101,7 @@ function ProductsTable(props: ProductsTableProps) {
                                 <ProductRow
                                     product={product}
                                     updateProductToUpdate={updateProductToUpdate}
+                                    invalidateProducts={fetchProducts}
                                 />
                             )}
                         </>

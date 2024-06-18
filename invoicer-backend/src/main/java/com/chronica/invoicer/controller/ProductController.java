@@ -40,4 +40,14 @@ public class ProductController {
     public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long id, @RequestBody ProductDTO product){
         return ResponseEntity.ok(productService.update(id, product));
     }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deprecateProduct(@PathVariable Long id) {
+        return ResponseEntity.ok(productService.deprecateProduct(id));
+    }
+
+    @GetMapping("/company/{id}")
+    public ResponseEntity<List<ProductDTO>> getCompanyProducts(@PathVariable Long id){
+        return ResponseEntity.ok(productService.getCompanyProducts(id));
+    }
 }

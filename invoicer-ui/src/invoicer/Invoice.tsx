@@ -6,64 +6,10 @@ import {CompanyDTO} from "../company/model/CompanyDTO";
 import InvoiceAPI from '../invoicer/service/InvoiceAPI';
 import {useSelectedProducts} from './service/SelectProductState';
 import {InvoiceDTO, InvoiceItemDTO} from './model/InvoiceDTO';
+import InvoicesTable from "./InvoicesTable";
 
 function Invoice({sellerId} : {sellerId:number}) {
-    const [customerId, setCustomerId] = useState('');
-    const [quantityProducts, setQuantityProducts] = useState<{ [key: number]: number }>({});
-    const [customer, setCustomer] = useState<CompanyDTO>({
-        name: '',
-        shortName: '',
-        street: '',
-        building: 0,
-        apartment: 0,
-        zipCode: '',
-        city: '',
-        nip: 0,
-    });
-    const [invoices, setInvoices] = useState<InvoiceDTO[]>([]);
-    const { selectedProducts } = useSelectedProducts();
     const [quantityPrices, setQuantityPrices] = useState<number[]>(Array(selectedProducts.length).fill(0));
-
-    const handleCreateInvoice = async() => {
-
-        const invoiceItems = selectedProducts.map((selectedItem, index) => {
-            const quantity = quantityPrices[index]
-            const invoiceItem: InvoiceItemDTO = {
-                invoicePosition: index + 1,
-                quantity: quantity,
-                discount: 0,
-                product: selectedItem
-            };
-
-            return invoiceItem;
-        });
-        try {
-            const invoice: InvoiceDTO = {
-                symbol: 'INV123',
-                creationDate: new Date(),
-                saleDate: new Date(),
-                paymentDate: new Date(),
-                seller: {
-                    id: sellerId
-                },
-                customer: customer,
-                invoicePrice: {
-                    netAmount: 0,
-                    vatAmount: 0,
-                    brutAmount: 0,
-                    invoiceItems: invoiceItems
-                }
-            };
-
-            // Wywołanie funkcji createInvoice
-            const createdInvoice = await InvoiceAPI.createInvoice(invoice);
-            console.log('Stworzono fakturę:', createdInvoice);
-            // Aktualizacja stanu faktur po stworzeniu nowej
-            setInvoices((prevInvoices) => [...prevInvoices, createdInvoice]);
-        } catch (error) {
-            console.error('Error creating invoice:', error);
-        }
-    };
 
     const handleQuantityPriceChange = (index: number, value: string) => {
         const newQuantityPrices = [...quantityPrices];
@@ -85,19 +31,6 @@ function Invoice({sellerId} : {sellerId:number}) {
         }
     };
 
-    useEffect(() => {
-        const fetchInvoices = async () => {
-            try {
-                const data = await InvoiceAPI.getSellerInvoices(sellerId);
-                setInvoices(data);
-            } catch (error) {
-
-            }
-        };
-        fetchInvoices();
-
-    }, [customerId, selectedProducts, quantityProducts]);
-
     return (
         <>
             <div>
@@ -106,30 +39,7 @@ function Invoice({sellerId} : {sellerId:number}) {
             <div className="main-container">
                 <div className="additional-container">
                     <h3>Lista wystawionych faktur:</h3>
-                    <table className="table">
-                        <thead>
-                        <tr>
-                            <th>Symbol</th>
-                            <th>Sprzedawca</th>
-                            <th>Klient</th>
-                            <th>Do zapłaty</th>
-                            <th>Widok</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {invoices.map((invoice) => (
-                            <tr key={invoice.id}>
-                                <td>{invoice.symbol}</td>
-                                <td>{invoice.seller?.name}</td>
-                                <td>{invoice.customer?.name}</td>
-                                <td>{invoice.invoicePrice?.netAmount?.toFixed(2)}</td>
-                                <td>
-                                    <button onClick={() => generateInvoice(invoice.id)}>Pobierz</button>
-                                </td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
+                    <InvoicesTable sellerId={sellerId}/>
                 </div>
             </div>
 
@@ -175,11 +85,6 @@ function Invoice({sellerId} : {sellerId:number}) {
                             </tbody>
                         </table>
                     </div>
-
-                    <div className="bottom-container">
-                        <button type="submit" onClick={() => handleCreateInvoice()}>Generuj fakturę</button>
-                    </div>
-
                 </div>
             </div>
         </>

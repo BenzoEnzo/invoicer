@@ -14,12 +14,12 @@ function ProductSelect(props: ProductSelectProps) {
     const [isNew, setIsNew] = useState(true)
 
     const updateProductHere = useCallback((option: ProductDTO | null) => {
-        setSelectedProduct(option);
-        console.log(isNew)
-        if (selectedProduct) {
-            props.updateProduct(selectedProduct, isNew);
+        props.updateProduct(option as ProductDTO, isNew);
+        if (!selectedProduct) {
             setIsNew(false);
         }
+        setSelectedProduct(option);
+
     }, [selectedProduct, setSelectedProduct, isNew, setIsNew, props.updateProduct]);
 
     return (
@@ -38,9 +38,7 @@ function ProductSelect(props: ProductSelectProps) {
             <td>
                 <Select
                     value={selectedProduct}
-                    onChange={(option: ProductDTO | null) => {
-                        setSelectedProduct(option);
-                    }}
+                    onChange={(option: ProductDTO | null) => updateProductHere(option)}
                     options={props.products}
                     getOptionLabel={(option: ProductDTO) => option.symbol}
                     getOptionValue={(option: ProductDTO) => option.id ? option.id.toString() : ''}
@@ -51,9 +49,7 @@ function ProductSelect(props: ProductSelectProps) {
             <td>
                 <Select
                     value={selectedProduct}
-                    onChange={(option: ProductDTO | null) => {
-                        setSelectedProduct(option);
-                    }}
+                    onChange={(option: ProductDTO | null) => updateProductHere(option)}
                     options={props.products}
                     getOptionLabel={(option: ProductDTO) => option.catalogNumber.toString()}
                     getOptionValue={(option: ProductDTO) => option.id ? option.id.toString() : ''}

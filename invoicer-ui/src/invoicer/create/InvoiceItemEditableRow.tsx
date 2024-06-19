@@ -1,8 +1,11 @@
-import {InvoiceItemDTO} from "./model/InvoiceDTO";
+import {InvoiceItemDTO} from "../model/InvoiceDTO";
 import {Trash} from "react-bootstrap-icons";
 import React, {useCallback, useEffect, useState} from "react";
-import {ProductDTO} from "../product/model/ProductDTO";
-import ProductSelect from "./ProductSelect";
+import {ProductDTO} from "../../product/model/ProductDTO";
+import ProductSelect from "../ProductSelect";
+import {isNullOrUndefined} from "node:util";
+import invoice from "../Invoice";
+import {handleInputChange} from "react-select/dist/declarations/src/utils";
 
 interface InvoiceItemEditableRowProps {
     products: ProductDTO[],
@@ -13,12 +16,14 @@ interface InvoiceItemEditableRowProps {
 
 function InvoiceItemEditableRow(props: InvoiceItemEditableRowProps) {
     const [invoiceItem, setInvoiceItem] = useState(props.item)
-    const [sumPrice, setSumPrice] = useState<number>()
+    const [sumPrice, setSumPrice] = useState<number>(0)
 
     const updateProduct = useCallback((product: ProductDTO, isNew: boolean) => {
-        let updatedItem: InvoiceItemDTO = {...invoiceItem};
-        updatedItem.partialPrice = product.netPrice;
-        updatedItem.product = product;
+        let updatedItem: InvoiceItemDTO = {
+            ...invoiceItem,
+            partialPrice: product.netPrice,
+            product: product,
+        };
         if(isNew) {
             updatedItem.discount = 0;
             updatedItem.quantity = 1;
@@ -26,33 +31,34 @@ function InvoiceItemEditableRow(props: InvoiceItemEditableRowProps) {
         setInvoiceItem(updatedItem);
         props.setInvoiceItems((prevState) => {
             let copy = [...prevState];
-            console.log("copy", copy)
             if (isNew) {
                 copy.push({});
             }
             copy[props.index] = invoiceItem;
-            console.log("copy2", copy)
             return copy;
         })
     }, [invoiceItem, setInvoiceItem, props.setInvoiceItems, props.index]);
 
-    const onChange = useCallback((e) => {
-        setInvoiceItem((prevState) => ({
-            ...prevState,
-            [e.target.id]: e.target.value
-        }))
-    },[invoiceItem, setInvoiceItem])
-
     useEffect(()=> {
         if (invoiceItem.partialPrice && invoiceItem.discount && invoiceItem.quantity) {
             setSumPrice(() => {
-                if (invoiceItem.partialPrice && invoiceItem.discount && invoiceItem.quantity) {
+                console.log(invoiceItem.partialPrice);
+                console.log(invoiceItem.quantity);
+                console.log(invoiceItem.discount !== null && invoiceItem.discount !== undefined);
+                if (invoiceItem.partialPrice && invoiceItem.quantity && invoiceItem.discount !== null && invoiceItem.discount !== undefined) {
                     return invoiceItem.partialPrice * (1-invoiceItem.discount/100) * invoiceItem.quantity
                 }
                 return 0;
             })
         }
     },[invoiceItem.partialPrice, invoiceItem.discount, invoiceItem.quantity])
+
+    const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        setInvoiceItem((prevState) => ({
+            ...prevState,
+            [e.target.id]: e.target.value
+        }))
+    },[invoiceItem, setInvoiceItem])
 
     return (
         <tr>
@@ -64,7 +70,7 @@ function InvoiceItemEditableRow(props: InvoiceItemEditableRowProps) {
                     type="number"
                     name="partialPrice"
                     value={invoiceItem.partialPrice}
-                    // onChange={handleProductInputChange}
+                    // onChange={handleInputChange}
                 />
             </td>
             <td>
@@ -73,7 +79,7 @@ function InvoiceItemEditableRow(props: InvoiceItemEditableRowProps) {
                     name="quantity"
                     value={invoiceItem.quantity}
                     min={1}
-                    // onChange={handleProductInputChange}
+                    // onChange={handleInputChange}
                 />
             </td>
             <td>
@@ -81,9 +87,10 @@ function InvoiceItemEditableRow(props: InvoiceItemEditableRowProps) {
                     type="number"
                     name="quantity"
                     value={invoiceItem.discount}
-                    // onChange={handleProductInputChange}
+                    // onChange={handleInputChange}
                 />
             </td>
+            <td>{sumPrice}</td>
             <td>
                 <button onClick={() => {}}>
                     <Trash className="ml-2"/>

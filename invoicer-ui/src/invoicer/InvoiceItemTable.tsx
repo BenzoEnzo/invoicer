@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {ProductDTO} from "../product/model/ProductDTO";
 import ProductAPI from "../product/service/ProductAPI";
-import InvoiceItemEditableRow from "./InvoiceItemEditableRow";
+import InvoiceItemEditableRow from "./create/InvoiceItemEditableRow";
 import {InvoiceItemDTO} from "./model/InvoiceDTO";
 import ProductEditRow from "../product/ProductEditRow";
 import ProductRow from "../product/ProductRow";

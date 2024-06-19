@@ -1,10 +1,10 @@
 import React, {useState, useEffect, useCallback} from "react";
 import axios from "axios";
 import Select, { SingleValue } from 'react-select';
-import { CompanyDTO } from "../company/model/CompanyDTO";
-import {InvoiceDTO, InvoiceItemDTO} from "./model/InvoiceDTO";
-import InvoiceAPI from "./service/InvoiceAPI";
-import InvoiceItemTable from "./InvoiceItemTable";
+import { CompanyDTO } from "../../company/model/CompanyDTO";
+import {InvoiceDTO, InvoiceItemDTO} from "../model/InvoiceDTO";
+import InvoiceAPI from "../service/InvoiceAPI";
+import InvoiceItemTable from "../InvoiceItemTable";
 
 interface CreateInvoiceFormProps {
     companyId: number;

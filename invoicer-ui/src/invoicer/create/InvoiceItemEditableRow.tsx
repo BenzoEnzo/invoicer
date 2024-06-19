@@ -3,9 +3,6 @@ import {Trash} from "react-bootstrap-icons";
 import React, {useCallback, useEffect, useState} from "react";
 import {ProductDTO} from "../../product/model/ProductDTO";
 import ProductSelect from "../ProductSelect";
-import {isNullOrUndefined} from "node:util";
-import invoice from "../Invoice";
-import {handleInputChange} from "react-select/dist/declarations/src/utils";
 
 interface InvoiceItemEditableRowProps {
     products: ProductDTO[],
@@ -54,11 +51,12 @@ function InvoiceItemEditableRow(props: InvoiceItemEditableRowProps) {
     },[invoiceItem.partialPrice, invoiceItem.discount, invoiceItem.quantity])
 
     const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
         setInvoiceItem((prevState) => ({
             ...prevState,
-            [e.target.id]: e.target.value
-        }))
-    },[invoiceItem, setInvoiceItem])
+            [name]: value
+        }));
+    }, [setInvoiceItem]);
 
     return (
         <tr>
@@ -70,7 +68,7 @@ function InvoiceItemEditableRow(props: InvoiceItemEditableRowProps) {
                     type="number"
                     name="partialPrice"
                     value={invoiceItem.partialPrice}
-                    // onChange={handleInputChange}
+                    onChange={onChange}
                 />
             </td>
             <td>
@@ -79,15 +77,17 @@ function InvoiceItemEditableRow(props: InvoiceItemEditableRowProps) {
                     name="quantity"
                     value={invoiceItem.quantity}
                     min={1}
-                    // onChange={handleInputChange}
+                    onChange={onChange}
                 />
             </td>
             <td>
                 <input
                     type="number"
-                    name="quantity"
+                    name="discount"
                     value={invoiceItem.discount}
-                    // onChange={handleInputChange}
+                    onChange={onChange}
+                    min={0}
+                    max={99}
                 />
             </td>
             <td>{sumPrice}</td>

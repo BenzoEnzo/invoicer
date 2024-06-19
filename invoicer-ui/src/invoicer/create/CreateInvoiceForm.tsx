@@ -27,16 +27,14 @@ function CreateInvoiceForm(props: CreateInvoiceFormProps) {
         setSelectedCompany(selectedOption);
     };
 
-    const onChange = useCallback((e) => {
+    const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setFormData((prevState) => ({
             ...prevState,
             [e.target.id]: e.target.value
         }))
-        console.log(formData);
     },[formData, setFormData])
 
-    const onSubmit = useCallback((e) => {
-        console.log(formData)
+    const onSubmit = useCallback(() => {
         InvoiceAPI.createInvoice({...formData, customer: { id: selectedCompany?.value }})
             .then(r => console.log(r));
      },[])
@@ -87,6 +85,7 @@ function CreateInvoiceForm(props: CreateInvoiceFormProps) {
                         />
                     </div>
                     <button type="submit">Utwórz fakturę</button>
+                    {}
                     <InvoiceItemTable companyId={props.companyId} invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems}/>
                 </form>
             </div>

@@ -1,11 +1,8 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {ProductDTO} from "../product/model/ProductDTO";
 import ProductAPI from "../product/service/ProductAPI";
 import InvoiceItemEditableRow from "./create/InvoiceItemEditableRow";
 import {InvoiceItemDTO} from "./model/InvoiceDTO";
-import ProductEditRow from "../product/ProductEditRow";
-import ProductRow from "../product/ProductRow";
-import Invoice from "./Invoice";
 
 interface InvoiceItemTableProps{
   companyId: number;
@@ -33,6 +30,7 @@ function InvoiceItemTable(props: InvoiceItemTableProps) {
                 <th>Cena netto</th>
                 <th>Ilość</th>
                 <th>Rabat</th>
+                <th>Do zapłaty</th>
                 <th>Akcje</th>
             </tr>
             </thead>

@@ -1,5 +1,5 @@
 import {ProductDTO} from "./model/ProductDTO";
-import {ArrowReturnLeft, Check2, Grid, Pen, Trash, XLg} from "react-bootstrap-icons";
+import {Check2, XLg} from "react-bootstrap-icons";
 import React, {useCallback} from "react";
 import Unit from "./model/Unit";
 import TaxRate from "./model/TaxRate";
@@ -15,9 +15,7 @@ interface ProductEditRowProps{
 }
 
 function ProductEditRow(props: ProductEditRowProps) {
-    const handleProductInputChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-    ) => {
+    const handleProductInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
 
         props.setProduct((prevProduct) => ({

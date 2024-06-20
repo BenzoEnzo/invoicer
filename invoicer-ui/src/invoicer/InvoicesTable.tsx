@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {InvoiceDTO} from "./model/InvoiceDTO";
 import InvoiceAPI from "./service/InvoiceAPI";
+import {toast} from "react-toastify";
 
 interface InvoicesTableProps {
     sellerId: number
+    selectedInvoiceId: number | undefined,
+    setSelectedInvoice: React.Dispatch<React.SetStateAction<InvoiceDTO | null>>
 }
 
 function InvoicesTable(props: InvoicesTableProps) {
@@ -12,7 +15,7 @@ function InvoicesTable(props: InvoicesTableProps) {
     useEffect(() => {
         InvoiceAPI.getSellerInvoices(props.sellerId)
             .then((r) => setInvoices(r))
-            .catch(() => {});
+            .catch(() => toast.error("Nie udało się pobrać faktur"));
     },[])
 
     return (
@@ -27,7 +30,11 @@ function InvoicesTable(props: InvoicesTableProps) {
             </thead>
             <tbody>
             {invoices.map((invoice) => (
-                <tr key={invoice.id}>
+                <tr
+                    key={invoice.id}
+                    className={invoice.id === props.selectedInvoiceId ? 'selected-row' : ''}
+                    onClick={() => props.setSelectedInvoice(invoice.id === props.selectedInvoiceId ? null : invoice)}
+                >
                     <td>{invoice.symbol}</td>
                     <td>{invoice.seller?.name}</td>
                     <td>{invoice.customer?.name}</td>

@@ -26,7 +26,7 @@ public class Invoice implements BaseEntity {
     @OneToOne(mappedBy = "invoice", cascade = CascadeType.ALL, orphanRemoval = true)
     private InvoicePrice invoicePrice;
 
-    @OneToMany(mappedBy="invoice", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "invoice", orphanRemoval = true)
     private List<InvoiceItem> invoiceItems;
 
     @ManyToOne(fetch = FetchType.EAGER)

@@ -5,6 +5,7 @@ import {CompanyDTO} from "../../company/model/CompanyDTO";
 import {InvoiceDTO, InvoiceItemDTO} from "../model/InvoiceDTO";
 import InvoiceItemEditableTable from "./InvoiceItemEditableTable";
 import {SubmitHandler, useForm} from "react-hook-form";
+import {toast} from "react-toastify";
 
 interface InvoiceCreateFormProps {
     companyId: number;
@@ -20,7 +21,7 @@ function InvoiceCreateForm(props: InvoiceCreateFormProps) {
     useEffect(() => {
         axios.get<CompanyDTO[]>("/api/companies")
             .then(response => setCompanies(response.data))
-            .catch(error => console.error("Error fetching companies:", error));
+            .catch(() => toast.error("Nie udało się pobrać klientów"));
     }, []);
 
     const handleCompanyChange = (selectedOption: SingleValue<{ value: number; label: string }>) => {

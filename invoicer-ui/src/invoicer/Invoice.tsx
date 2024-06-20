@@ -1,12 +1,15 @@
-import React from 'react';
+import React, {useState} from 'react';
 import '../shared/style/form.css';
 import '../shared/style/container.css';
 import '../shared/style/table.css';
 import InvoiceAPI from '../invoicer/service/InvoiceAPI';
 import InvoicesTable from "./InvoicesTable";
 import InvoiceForm from "./InvoiceForm";
+import {InvoiceDTO} from "./model/InvoiceDTO";
 
 function Invoice({sellerId} : {sellerId:number}) {
+    const [selectedInvoice, setSelectedInvoice] = useState<InvoiceDTO | null>(null)
+
     const generateInvoice = async (invoiceId: number | undefined) => {
         try {
             const blob = await InvoiceAPI.generateInvoice(invoiceId);
@@ -29,10 +32,12 @@ function Invoice({sellerId} : {sellerId:number}) {
             <div className="main-container">
                 <div className="additional-container">
                     <h3>Lista wystawionych faktur:</h3>
-                    <InvoicesTable sellerId={sellerId}/>
+                    <InvoicesTable sellerId={sellerId} selectedInvoiceId={selectedInvoice?.id} setSelectedInvoice={setSelectedInvoice}/>
                 </div>
                 <div className="additional-container">
-                    <InvoiceForm invoice={{}}/>
+                    {selectedInvoice &&
+                        <InvoiceForm invoice={selectedInvoice}/>
+                    }
                 </div>
             </div>
         </>

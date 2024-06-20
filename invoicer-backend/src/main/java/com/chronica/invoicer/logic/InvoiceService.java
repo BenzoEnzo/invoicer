@@ -5,6 +5,8 @@ import com.chronica.invoicer.data.entity.Invoice;
 import com.chronica.invoicer.data.entity.InvoiceItem;
 import com.chronica.invoicer.data.entity.InvoicePrice;
 import com.chronica.invoicer.data.enumerated.TaxRate;
+import com.chronica.invoicer.data.repository.InvoiceItemRepository;
+import com.chronica.invoicer.data.repository.InvoicePriceRepository;
 import com.chronica.invoicer.data.repository.InvoiceRepository;
 import com.chronica.invoicer.mapper.InvoiceMapper;
 import jakarta.transaction.Transactional;
@@ -20,6 +22,8 @@ import java.util.List;
 public class InvoiceService {
     private final InvoiceRepository invoiceRepository;
     private final InvoiceMapper invoiceMapper;
+    private final InvoicePriceRepository invoicePriceRepository;
+    private final InvoiceItemRepository invoiceItemRepository;
 
     public List<InvoiceDTO> getSellerInvoices(Long sellerId){
         return invoiceRepository.findInvoicesBySeller_Id(sellerId)
@@ -35,8 +39,12 @@ public class InvoiceService {
             invoice.setInvoicePrice(calculateInvoicePrice(invoice.getInvoiceItems()));
 
         }
-        invoiceRepository.save(invoice);
-        return invoiceMapper.mapToDTO(invoice);
+        Invoice savedInvoice = invoiceRepository.save(invoice);
+        invoice.getInvoicePrice().setInvoice(savedInvoice);
+        invoicePriceRepository.save(invoice.getInvoicePrice());
+        invoice.getInvoiceItems().forEach(item -> item.setInvoice(savedInvoice));
+        invoiceItemRepository.saveAll(invoice.getInvoiceItems());
+        return invoiceMapper.mapToDTO(savedInvoice);
     }
 
     public InvoicePrice calculateInvoicePrice(List<InvoiceItem> invoiceItems) {

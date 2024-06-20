@@ -29,7 +29,7 @@ function InvoiceForm(props: InvoiceFormProps) {
                     <label htmlFor="paymentDate">Data płatności:</label>
                     <input type="string" id="paymentDate" value={props.invoice.paymentDate} readOnly/>
                 </div>
-                {/*<InvoiceItemTable companyId={props.companyId} invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems}/>*/}
+                {/*<InvoiceItemEditableTable companyId={props.companyId} invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems}/>*/}
             </div>
         </>
     )

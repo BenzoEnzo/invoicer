@@ -2,7 +2,7 @@ import {InvoiceItemDTO} from "../model/InvoiceDTO";
 import {Trash} from "react-bootstrap-icons";
 import React, {useCallback, useEffect, useState} from "react";
 import {ProductDTO} from "../../product/model/ProductDTO";
-import ProductSelect from "../ProductSelect";
+import ProductSelect from "./ProductSelect";
 
 interface InvoiceItemEditableRowProps {
     products: ProductDTO[],
@@ -36,16 +36,12 @@ function InvoiceItemEditableRow(props: InvoiceItemEditableRowProps) {
         })
     }, [invoiceItem, setInvoiceItem, props.setInvoiceItems, props.index]);
 
-    useEffect(()=> {
-        if (invoiceItem.partialPrice && invoiceItem.discount && invoiceItem.quantity) {
-            setSumPrice(() => {
-                if (invoiceItem.partialPrice && invoiceItem.quantity && invoiceItem.discount !== null && invoiceItem.discount !== undefined) {
-                    return invoiceItem.partialPrice * (1-invoiceItem.discount/100) * invoiceItem.quantity
-                }
-                return 0;
-            })
+    useEffect(() => {
+        if (invoiceItem.partialPrice && invoiceItem.quantity) {
+            const discount = invoiceItem.discount ?? 0;
+            setSumPrice(invoiceItem.partialPrice * (1 - discount / 100) * invoiceItem.quantity);
         }
-    },[invoiceItem.partialPrice, invoiceItem.discount, invoiceItem.quantity])
+    }, [invoiceItem]);
 
     const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;

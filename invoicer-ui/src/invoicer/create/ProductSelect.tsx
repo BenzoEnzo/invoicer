@@ -1,4 +1,4 @@
-import {ProductDTO} from "../product/model/ProductDTO";
+import {ProductDTO} from "../../product/model/ProductDTO";
 import Select from "react-select";
 import React, {useCallback, useState} from "react";
 import {toast} from "react-toastify";

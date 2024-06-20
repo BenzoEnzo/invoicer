@@ -3,14 +3,14 @@ import axios from "axios";
 import Select, {SingleValue} from 'react-select';
 import {CompanyDTO} from "../../company/model/CompanyDTO";
 import {InvoiceDTO, InvoiceItemDTO} from "../model/InvoiceDTO";
-import InvoiceItemTable from "../InvoiceItemTable";
+import InvoiceItemEditableTable from "./InvoiceItemEditableTable";
 import {SubmitHandler, useForm} from "react-hook-form";
 
-interface CreateInvoiceFormProps {
+interface InvoiceCreateFormProps {
     companyId: number;
 }
 
-function CreateInvoiceForm(props: CreateInvoiceFormProps) {
+function InvoiceCreateForm(props: InvoiceCreateFormProps) {
     const { register, handleSubmit } = useForm<InvoiceDTO>();
     const [invoiceItems, setInvoiceItems] = useState<InvoiceItemDTO[]>([{}])
 
@@ -82,11 +82,11 @@ function CreateInvoiceForm(props: CreateInvoiceFormProps) {
                         />
                     </div>
                     <button type="submit">Utwórz fakturę</button>
-                    <InvoiceItemTable companyId={props.companyId} invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems}/>
+                    <InvoiceItemEditableTable companyId={props.companyId} invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems}/>
                 </form>
             </div>
         </>
     );
 }
 
-export default CreateInvoiceForm;
+export default InvoiceCreateForm;

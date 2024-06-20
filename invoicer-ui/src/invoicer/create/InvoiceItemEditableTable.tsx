@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from "react";
-import {ProductDTO} from "../product/model/ProductDTO";
-import ProductAPI from "../product/service/ProductAPI";
-import InvoiceItemEditableRow from "./create/InvoiceItemEditableRow";
-import {InvoiceItemDTO} from "./model/InvoiceDTO";
+import {ProductDTO} from "../../product/model/ProductDTO";
+import ProductAPI from "../../product/service/ProductAPI";
+import InvoiceItemEditableRow from "./InvoiceItemEditableRow";
+import {InvoiceItemDTO} from "../model/InvoiceDTO";
 
-interface InvoiceItemTableProps{
+interface InvoiceItemEditableTableProps{
   companyId: number;
   invoiceItems: InvoiceItemDTO[],
   setInvoiceItems: React.Dispatch<React.SetStateAction<InvoiceItemDTO[]>>;
 }
 
-function InvoiceItemTable(props: InvoiceItemTableProps) {
+function InvoiceItemEditableTable(props: InvoiceItemEditableTableProps) {
     const [products, setProducts] = useState<ProductDTO[]>([])
 
     useEffect(() => {
@@ -51,4 +51,4 @@ function InvoiceItemTable(props: InvoiceItemTableProps) {
     )
 }
 
-export default InvoiceItemTable;
+export default InvoiceItemEditableTable;

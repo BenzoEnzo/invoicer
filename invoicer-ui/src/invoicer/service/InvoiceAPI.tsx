@@ -1,6 +1,5 @@
 import axios from 'axios';
 import {InvoiceDTO} from '../model/InvoiceDTO'
-import {ProductDTO} from "../../product/model/ProductDTO";
 
 const API_INVOICE_URL = '/api/invoices';
 
@@ -27,21 +26,6 @@ class InvoiceAPI {
             throw error;
         }
     }
-
-    async createInvoice(invoice: InvoiceDTO): Promise<InvoiceDTO> {
-        try {
-            const response = await axios.post<InvoiceDTO>(API_INVOICE_URL, invoice);
-            return response.data;
-        } catch (error) {
-            // More specific error handling (optional)
-            if (axios.isAxiosError(error) && error.response) {
-                throw new Error(`API Error: ${error.response.status} - ${error.response.data}`);
-            } else {
-                throw error;
-            }
-        }
-    }
-
 }
 
 export default new InvoiceAPI();

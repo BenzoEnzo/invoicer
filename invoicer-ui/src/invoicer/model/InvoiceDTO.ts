@@ -16,7 +16,7 @@ export interface InvoiceItemDTO extends EntityDTO {
     invoicePosition?: number;
     quantity?: number;
     discount?: number;
-    product?: ProductDTO;
+    archivalProduct?: ProductDTO;
     partialPrice?: number;
 }
 

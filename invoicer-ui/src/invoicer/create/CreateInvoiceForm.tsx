@@ -1,17 +1,17 @@
-import React, {useState, useEffect, useCallback} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
-import Select, { SingleValue } from 'react-select';
-import { CompanyDTO } from "../../company/model/CompanyDTO";
+import Select, {SingleValue} from 'react-select';
+import {CompanyDTO} from "../../company/model/CompanyDTO";
 import {InvoiceDTO, InvoiceItemDTO} from "../model/InvoiceDTO";
-import InvoiceAPI from "../service/InvoiceAPI";
 import InvoiceItemTable from "../InvoiceItemTable";
+import {SubmitHandler, useForm} from "react-hook-form";
 
 interface CreateInvoiceFormProps {
     companyId: number;
 }
 
 function CreateInvoiceForm(props: CreateInvoiceFormProps) {
-    const [formData, setFormData] = useState<InvoiceDTO>({ seller: {id: props.companyId} })
+    const { register, handleSubmit } = useForm<InvoiceDTO>();
     const [invoiceItems, setInvoiceItems] = useState<InvoiceItemDTO[]>([{}])
 
     const [companies, setCompanies] = useState<CompanyDTO[]>([]);
@@ -27,17 +27,17 @@ function CreateInvoiceForm(props: CreateInvoiceFormProps) {
         setSelectedCompany(selectedOption);
     };
 
-    const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        setFormData((prevState) => ({
-            ...prevState,
-            [e.target.id]: e.target.value
-        }))
-    },[formData, setFormData])
-
-    const onSubmit = useCallback(() => {
-        InvoiceAPI.createInvoice({...formData, customer: { id: selectedCompany?.value }})
-            .then(r => console.log(r));
-     },[])
+    const onSubmit: SubmitHandler<InvoiceDTO> = ((data, event) => {
+        event?.preventDefault();
+        axios.post<InvoiceDTO>('/api/invoices', {
+            ...data,
+            seller: {id: props.companyId },
+            customer: { id: selectedCompany?.value },
+            invoiceItems: invoiceItems.filter(item => Object.keys(item).length !== 0)
+        })
+            .then((r) => console.log(r.data))
+            .catch(() => {});
+    });
 
     return (
         <>
@@ -45,7 +45,7 @@ function CreateInvoiceForm(props: CreateInvoiceFormProps) {
                 <h2>Tworzenie faktury</h2>
             </div>
             <div className="main-container">
-                <form onSubmit={onSubmit}>
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <Select
                         value={selectedCompany}
                         onChange={handleCompanyChange}
@@ -58,9 +58,8 @@ function CreateInvoiceForm(props: CreateInvoiceFormProps) {
                         <h3>Symbol faktury:</h3>
                         <input
                             type="string"
+                            {...register("symbol")}
                             id="symbol"
-                            value={formData.symbol}
-                            onChange={onChange}
                             required
                         />
                     </div>
@@ -68,24 +67,21 @@ function CreateInvoiceForm(props: CreateInvoiceFormProps) {
                         <h3>Data wystawienia faktury:</h3>
                         <input
                             type="date"
+                            {...register("saleDate")}
                             id="saleDate"
-                            name="saleDate"
-                            value={formData.saleDate}
-                            onChange={onChange}
+                            required
                         />
                     </div>
                     <div>
                         <h3>Data płatności:</h3>
                         <input
                             type="date"
+                            {...register("paymentDate")}
                             id="paymentDate"
-                            name="paymentDate"
-                            value={formData.saleDate}
-                            onChange={onChange}
+                            required
                         />
                     </div>
                     <button type="submit">Utwórz fakturę</button>
-                    {}
                     <InvoiceItemTable companyId={props.companyId} invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems}/>
                 </form>
             </div>

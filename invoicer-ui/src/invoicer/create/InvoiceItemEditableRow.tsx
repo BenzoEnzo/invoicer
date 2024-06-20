@@ -19,7 +19,7 @@ function InvoiceItemEditableRow(props: InvoiceItemEditableRowProps) {
         let updatedItem: InvoiceItemDTO = {
             ...invoiceItem,
             partialPrice: product.netPrice,
-            product: product,
+            archivalProduct: product,
         };
         if(isNew) {
             updatedItem.discount = 0;
@@ -31,7 +31,7 @@ function InvoiceItemEditableRow(props: InvoiceItemEditableRowProps) {
             if (isNew) {
                 copy.push({});
             }
-            copy[props.index] = invoiceItem;
+            copy[props.index] = updatedItem;
             return copy;
         })
     }, [invoiceItem, setInvoiceItem, props.setInvoiceItems, props.index]);
@@ -39,9 +39,6 @@ function InvoiceItemEditableRow(props: InvoiceItemEditableRowProps) {
     useEffect(()=> {
         if (invoiceItem.partialPrice && invoiceItem.discount && invoiceItem.quantity) {
             setSumPrice(() => {
-                console.log(invoiceItem.partialPrice);
-                console.log(invoiceItem.quantity);
-                console.log(invoiceItem.discount !== null && invoiceItem.discount !== undefined);
                 if (invoiceItem.partialPrice && invoiceItem.quantity && invoiceItem.discount !== null && invoiceItem.discount !== undefined) {
                     return invoiceItem.partialPrice * (1-invoiceItem.discount/100) * invoiceItem.quantity
                 }
@@ -52,17 +49,23 @@ function InvoiceItemEditableRow(props: InvoiceItemEditableRowProps) {
 
     const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
-        setInvoiceItem((prevState) => ({
-            ...prevState,
+        const updatedItem = {
+            ...invoiceItem,
             [name]: value
-        }));
-    }, [setInvoiceItem]);
+        }
+        setInvoiceItem(updatedItem);
+        props.setInvoiceItems((prevState) => {
+            let copy = [...prevState];
+            copy[props.index] = updatedItem;
+            return copy;
+        })
+    }, [invoiceItem, setInvoiceItem, props.item]);
 
     return (
         <tr>
             <ProductSelect products={props.products} updateProduct={updateProduct}/>
-            <td>{invoiceItem.product?.unit}</td>
-            <td>{invoiceItem.product?.taxRate}%</td>
+            <td>{invoiceItem.archivalProduct?.unit}</td>
+            <td>{invoiceItem.archivalProduct?.taxRate}%</td>
             <td>
                 <input
                     type="number"

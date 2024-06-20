@@ -3,6 +3,7 @@ import {ProductDTO} from "../../product/model/ProductDTO";
 import ProductAPI from "../../product/service/ProductAPI";
 import InvoiceItemEditableRow from "./InvoiceItemEditableRow";
 import {InvoiceItemDTO} from "../model/InvoiceDTO";
+import {toast} from "react-toastify";
 
 interface InvoiceItemEditableTableProps{
   companyId: number;
@@ -14,7 +15,9 @@ function InvoiceItemEditableTable(props: InvoiceItemEditableTableProps) {
     const [products, setProducts] = useState<ProductDTO[]>([])
 
     useEffect(() => {
-        ProductAPI.getCompanyProducts(props.companyId).then((r) => setProducts(r));
+        ProductAPI.getCompanyProducts(props.companyId)
+            .then((r) => setProducts(r))
+            .catch(() => toast.error("Nie udało się pobrać produktów"));
     },[])
 
     return (

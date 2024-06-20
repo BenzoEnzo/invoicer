@@ -28,7 +28,7 @@ public class InvoiceItem implements BaseEntity {
     @JoinColumn(name = "archival_product_id")
     private ArchivalProduct archivalProduct;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "invoice_id")
     private Invoice invoice;
 }

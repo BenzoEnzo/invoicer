@@ -33,7 +33,12 @@ function InvoiceForm(props: InvoiceFormProps) {
                     <label htmlFor="paymentDate">Data płatności:</label>
                     <input type="date" id="paymentDate" value={formatDate(props.invoice.paymentDate ?? "")} readOnly/>
                 </div>
-                <InvoiceItemTable invoiceItems={props.invoice.invoiceItems ?? []} selectedInvoiceId={selectedInvoiceId} setSelectedInvoiceId={setSelectedInvoiceId}/>
+                <InvoiceItemTable
+                    invoiceItems={props.invoice.invoiceItems ?? []}
+                    selectedInvoiceId={selectedInvoiceId}
+                    setSelectedInvoiceId={setSelectedInvoiceId}
+                    invoicePrice={props.invoice.invoicePrice ?? {}}
+                />
             </div>
         </>
     )

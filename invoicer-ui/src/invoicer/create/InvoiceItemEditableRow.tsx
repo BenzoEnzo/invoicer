@@ -3,6 +3,7 @@ import {Trash} from "react-bootstrap-icons";
 import React, {useCallback, useEffect, useState} from "react";
 import {ProductDTO} from "../../product/model/ProductDTO";
 import ProductSelect from "./ProductSelect";
+import {countPrices, Price} from "../InvoiceItemPriceUtils";
 
 interface InvoiceItemEditableRowProps {
     products: ProductDTO[],
@@ -13,7 +14,7 @@ interface InvoiceItemEditableRowProps {
 
 function InvoiceItemEditableRow(props: InvoiceItemEditableRowProps) {
     const [invoiceItem, setInvoiceItem] = useState(props.item)
-    const [sumPrice, setSumPrice] = useState<number>(0)
+    const [price, setPrice] = useState<Price | null>(null)
 
     const updateProduct = useCallback((product: ProductDTO, isNew: boolean) => {
         let updatedItem: InvoiceItemDTO = {
@@ -36,13 +37,6 @@ function InvoiceItemEditableRow(props: InvoiceItemEditableRowProps) {
         })
     }, [invoiceItem, setInvoiceItem, props.setInvoiceItems, props.index]);
 
-    useEffect(() => {
-        if (invoiceItem.partialPrice && invoiceItem.quantity) {
-            const discount = invoiceItem.discount ?? 0;
-            setSumPrice(invoiceItem.partialPrice * (1 - discount / 100) * invoiceItem.quantity);
-        }
-    }, [invoiceItem]);
-
     const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         const updatedItem = {
@@ -56,6 +50,12 @@ function InvoiceItemEditableRow(props: InvoiceItemEditableRowProps) {
             return copy;
         })
     }, [invoiceItem, setInvoiceItem, props.item]);
+
+    useEffect(() => {
+        if (invoiceItem.archivalProduct){
+            setPrice(countPrices(props.item))
+        }
+    },[props.item])
 
     return (
         <tr>
@@ -89,7 +89,8 @@ function InvoiceItemEditableRow(props: InvoiceItemEditableRowProps) {
                     max={99}
                 />
             </td>
-            <td>{sumPrice}</td>
+            <td>{price?.netPrice}</td>
+            <td>{price?.brutPrice}</td>
             <td>
                 <button onClick={() => {}}>
                     <Trash className="ml-2"/>

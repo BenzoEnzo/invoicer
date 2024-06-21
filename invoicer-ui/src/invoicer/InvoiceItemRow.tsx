@@ -1,5 +1,6 @@
 import {InvoiceItemDTO} from "./model/InvoiceDTO";
-import React from "react";
+import React, {useEffect, useState} from "react";
+import {countPrices, Price} from "./InvoiceItemPriceUtils";
 
 interface InvoiceItemRowProps {
     invoiceItem: InvoiceItemDTO,
@@ -8,6 +9,12 @@ interface InvoiceItemRowProps {
 }
 
 function InvoiceItemRow(props: InvoiceItemRowProps) {
+    const [price, setPrice] = useState<Price>({ netPrice: 0, brutPrice: 0 })
+
+    useEffect(() => {
+        setPrice(countPrices(props.invoiceItem))
+    },[props.invoiceItem])
+
     return (
         <tr>
             <td>{props.invoiceItem.archivalProduct?.name}</td>
@@ -15,9 +22,11 @@ function InvoiceItemRow(props: InvoiceItemRowProps) {
             <td>{props.invoiceItem.archivalProduct?.catalogNumber}</td>
             <td>{props.invoiceItem.archivalProduct?.unit}</td>
             <td>{props.invoiceItem.archivalProduct?.taxRate}</td>
+            <td>{props.invoiceItem.partialPrice}</td>
             <td>{props.invoiceItem.quantity}</td>
             <td>{props.invoiceItem.discount}</td>
-            <td>0</td>
+            <td>{price.netPrice}</td>
+            <td>{price.brutPrice}</td>
         </tr>
     )
 }

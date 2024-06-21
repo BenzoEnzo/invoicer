@@ -32,9 +32,8 @@ function Invoice({sellerId} : {sellerId:number}) {
             <div className="main-container">
                 <div className="additional-container">
                     <h3>Lista wystawionych faktur:</h3>
-                    <InvoicesTable sellerId={sellerId} selectedInvoiceId={selectedInvoice?.id} setSelectedInvoice={setSelectedInvoice}/>
-                </div>
-                <div className="additional-container">
+                    <InvoicesTable sellerId={sellerId} selectedInvoiceId={selectedInvoice?.id}
+                                   setSelectedInvoice={setSelectedInvoice}/>
                     {selectedInvoice &&
                         <InvoiceForm invoice={selectedInvoice}/>
                     }

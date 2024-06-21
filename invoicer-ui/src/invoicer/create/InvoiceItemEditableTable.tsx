@@ -4,6 +4,8 @@ import ProductAPI from "../../product/service/ProductAPI";
 import InvoiceItemEditableRow from "./InvoiceItemEditableRow";
 import {InvoiceItemDTO} from "../model/InvoiceDTO";
 import {toast} from "react-toastify";
+import InvoiceSumRow from "../InvoiceSumRow";
+import {countSum, Price} from "../InvoiceItemPriceUtils";
 
 interface InvoiceItemEditableTableProps{
   companyId: number;
@@ -13,6 +15,11 @@ interface InvoiceItemEditableTableProps{
 
 function InvoiceItemEditableTable(props: InvoiceItemEditableTableProps) {
     const [products, setProducts] = useState<ProductDTO[]>([])
+    const [sum, setSum] = useState<Price>({ netPrice: 0, brutPrice: 0 });
+
+    useEffect(() => {
+        setSum(countSum(props.invoiceItems));
+    },[props.invoiceItems]);
 
     useEffect(() => {
         ProductAPI.getCompanyProducts(props.companyId)
@@ -33,11 +40,12 @@ function InvoiceItemEditableTable(props: InvoiceItemEditableTableProps) {
                 <th>Cena netto</th>
                 <th>Ilość</th>
                 <th>Rabat</th>
-                <th>Do zapłaty</th>
+                <th>Do zapłaty netto</th>
+                <th>Do zapłaty brutto</th>
                 <th>Akcje</th>
             </tr>
             </thead>
-            <tbody>
+                <tbody>
             {props.invoiceItems.map((item) => (
                 <>
                     <InvoiceItemEditableRow
@@ -48,6 +56,7 @@ function InvoiceItemEditableTable(props: InvoiceItemEditableTableProps) {
                     />
                 </>
             ))}
+            <InvoiceSumRow columnsNumber={10} netPrice={sum.netPrice} brutPrice={sum.brutPrice}/>
             </tbody>
             </table>
         </>

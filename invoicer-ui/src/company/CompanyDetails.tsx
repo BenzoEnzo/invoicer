@@ -4,6 +4,7 @@ import '../shared/style/form.css';
 import Product from "../product/Product";
 import Invoice from "../invoicer/Invoice";
 import {CompanyDTO} from "./model/CompanyDTO";
+import {useLocation, useNavigate, useParams} from 'react-router-dom';
 import { SelectedProductsProvider } from '../invoicer/service/SelectProductState'
 import InvoiceCreateForm from "../invoicer/create/InvoiceCreateForm";
 
@@ -11,8 +12,15 @@ import InvoiceCreateForm from "../invoicer/create/InvoiceCreateForm";
 function CompanyDetails({ companyDetailData, companyId }: { companyDetailData: CompanyDTO | null, companyId: number }){
     const [activeMenuItem, setActiveMenuItem] = useState('Dane');
     const [isLoading, setIsLoading] = useState(false);
+    const location = useLocation();
+    const navigate = useNavigate();
     const handleMenuItemClick = (item: string) => {
         setActiveMenuItem(item);
+        if (item === 'Dodaj fakturę') {
+            navigate(`/firma/${companyId}/faktury/tworzenie`);
+        } else {
+            navigate(`/firma/${companyId}/${item.toLowerCase()}`);
+        }
     };
     return (
         <div className="company-details-container">
@@ -36,7 +44,7 @@ function CompanyDetails({ companyDetailData, companyId }: { companyDetailData: C
             </div>
             <div className="content">
                 <SelectedProductsProvider>
-                    {activeMenuItem === 'Produkty' && <Product companyId={companyId}/>}
+                    {activeMenuItem === 'Produkty' && <Product companyId={companyId}/> }
                     {activeMenuItem === 'Faktury' && <Invoice sellerId={companyId}/> }
                     {activeMenuItem === 'Dodaj fakturę' && <InvoiceCreateForm companyId={companyId}/> }
                     </SelectedProductsProvider>

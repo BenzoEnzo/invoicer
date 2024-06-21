@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import CompanyAPI from './service/CompanyAPI';
 import CompanyDetails from './CompanyDetails';
 import { CompanyDTO } from './model/CompanyDTO';
+import { useNavigate } from 'react-router-dom';
 import './style/company.css';
 import '../shared/style/form.css';
 
 function Company() {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState<CompanyDTO>({
         name: '',
         shortName: '',
@@ -43,6 +45,7 @@ function Company() {
             setShowAccessForm(false);
             setFetchInfo(true);
             setCompanyInfo(data);
+            navigate(`/firma/${accessCompanyId}`);
         } catch (error) {
             setError('Wystąpił błąd podczas pobierania danych firmy.');
         }

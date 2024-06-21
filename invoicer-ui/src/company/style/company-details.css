@@ -1,6 +1,7 @@
 .company-details-container {
     display: flex;
     min-height: 100vh;
+    flex: 1 1 auto;
 }
 
 .menu {
@@ -10,6 +11,7 @@
     color: white;
     padding: 1.5rem;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
 }
 
 .menu-item {
@@ -29,7 +31,7 @@
 }
 
 .content {
-    flex: 1;
+    flex: 1 1 auto;
     padding: 2rem;
+    overflow: auto;
 }
-

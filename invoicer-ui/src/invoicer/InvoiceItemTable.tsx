@@ -5,8 +5,6 @@ import InvoiceSumRow from "./InvoiceSumRow";
 
 interface InvoiceItemTableProps {
     invoiceItems: InvoiceItemDTO[],
-    selectedInvoiceId: number | null,
-    setSelectedInvoiceId: React.Dispatch<React.SetStateAction<number | null>>,
     invoicePrice: InvoicePriceDTO,
 }
 
@@ -31,8 +29,6 @@ function InvoiceItemTable(props: InvoiceItemTableProps) {
             {props.invoiceItems.map((item) => (
                 <InvoiceItemRow
                     invoiceItem={item}
-                    isSelected={false}
-                    setSelectedInvoiceId={props.setSelectedInvoiceId}
                 />
             ))}
             <InvoiceSumRow

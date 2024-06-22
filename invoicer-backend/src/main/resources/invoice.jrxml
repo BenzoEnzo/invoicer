@@ -90,6 +90,7 @@ JOIN company c ON i.seller_id = c.id]]>
 	<parameter name="id" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
 	</parameter>
+	<parameter name="price_sum" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
     i.id AS invoiceId,
@@ -236,6 +237,20 @@ WHERE  i.id = $P{id}]]>
 				</box>
 				<text><![CDATA[Podpis ]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="300" y="2" width="254" height="43" uuid="c5a153af-558f-43bd-a1f6-11f22e1cb3c4"/>
+				<textElement>
+					<font size="26"/>
+				</textElement>
+				<textFieldExpression><![CDATA["SUMA CAŁKOWITA"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="350" y="45" width="189" height="55" uuid="9cc63446-84cf-40f5-8e1c-7fa1bce942b4"/>
+				<textElement>
+					<font size="24"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{price_sum}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 </jasperReport>

@@ -1,10 +1,9 @@
 import React from 'react';
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import Company from './company/Company';
-import { ToastContainer } from "react-toastify";
-import CompanyDetails from "./company/CompanyDetails";
+import {ToastContainer} from "react-toastify";
 
 function App() {
     return (
@@ -19,7 +18,7 @@ function App() {
                 <main className="detail">
                     <div className="content-card">
                         <Routes>
-                            <Route path="/" element={<Company />} />
+                            <Route path="/" element={<Company showContainer/>} />
                             <Route path="/firma/:id" element={<Company />} />
                             <Route path="/firma/:id/dane" element={<Company />} />
                             <Route path="/firma/:id/produkty" element={<Company />} />

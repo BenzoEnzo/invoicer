@@ -32,6 +32,10 @@ public class InvoiceService {
                 .toList();
     }
 
+    public Invoice findInvoiceById(Long id){
+        return invoiceRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Invoice doesnt exist"));
+    }
+
     @Transactional
     public InvoiceDTO create(InvoiceDTO invoiceDTO){
         Invoice invoice = invoiceMapper.mapToEntity(invoiceDTO);

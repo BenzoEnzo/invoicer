@@ -1,5 +1,6 @@
 package com.chronica.invoicer.logic;
 
+import com.chronica.invoicer.data.entity.Invoice;
 import lombok.RequiredArgsConstructor;
 import net.sf.jasperreports.engine.*;
 import org.springframework.core.io.ResourceLoader;
@@ -23,17 +24,23 @@ import java.util.Map;
 public class JasperService {
     private final ResourceLoader resourceLoader;
     private final DataSource dataSource;
+    private final InvoiceService invoiceService;
 
     public ResponseEntity<byte[]> generateInvoiceReport(Long id) {
         try {
 
             String templatePath = "classpath:invoice.jrxml";
 
+            Invoice invoice = invoiceService.findInvoiceById(id);
+
+            String priceSum = String.valueOf(invoice.getInvoicePrice().getNetAmount());
+
             JasperReport jasperReport = JasperCompileManager.compileReport(resourceLoader.getResource(templatePath).getInputStream());
             Connection connection = dataSource.getConnection();
             Map<String, Object> parameters = new HashMap<>();
 
             parameters.put("id", id);
+            parameters.put("price_sum", priceSum);
 
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, connection);
 

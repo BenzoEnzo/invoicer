@@ -1,24 +1,42 @@
 import {InvoiceDTO} from "./model/InvoiceDTO";
-import React, {useState} from "react";
+import React, {useCallback} from "react";
 import InvoiceItemTable from "./InvoiceItemTable";
 import {formatDate} from "../shared/DateUtils";
 import '../shared/style/temp.css'
+import InvoiceAPI from "./service/InvoiceAPI";
+import {toast} from "react-toastify";
 
 interface InvoiceFormProps {
     invoice: InvoiceDTO
 }
 
 function InvoiceForm(props: InvoiceFormProps) {
-    const [selectedInvoiceId, setSelectedInvoiceId] = useState<number | null>(null);
+    const printInvoice = useCallback(() => {
+        InvoiceAPI.generateInvoice(props.invoice.id)
+            .then((blob) => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `invoice_${props.invoice.id}.pdf`;
+                a.click();
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(() => {
+                toast.error("Nie udało się wydrukować faktury")
+            });
+    }, [props.invoice]);
 
     return (
         <>
-            <div>
+            <div className="form-header">
                 <h3>Faktura</h3>
+                <div>
+                    <button onClick={() => printInvoice()}>Drukuj fakturę</button>
+                </div>
             </div>
             <div className="main-container">
                 <div className="field">
-                    <label htmlFor="nip">Klient:</label>
+                <label htmlFor="nip">Klient:</label>
                     <input type="string" id="customer" value={props.invoice.customer?.name} readOnly/>
                 </div>
                 <div className="field">
@@ -35,8 +53,6 @@ function InvoiceForm(props: InvoiceFormProps) {
                 </div>
                 <InvoiceItemTable
                     invoiceItems={props.invoice.invoiceItems ?? []}
-                    selectedInvoiceId={selectedInvoiceId}
-                    setSelectedInvoiceId={setSelectedInvoiceId}
                     invoicePrice={props.invoice.invoicePrice ?? {}}
                 />
             </div>

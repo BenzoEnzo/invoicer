@@ -3,9 +3,7 @@ import React, {useEffect, useState} from "react";
 import {countPrices, Price} from "./InvoiceItemPriceUtils";
 
 interface InvoiceItemRowProps {
-    invoiceItem: InvoiceItemDTO,
-    isSelected: boolean,
-    setSelectedInvoiceId: React.Dispatch<React.SetStateAction<number | null>>
+    invoiceItem: InvoiceItemDTO
 }
 
 function InvoiceItemRow(props: InvoiceItemRowProps) {

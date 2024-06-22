@@ -51,6 +51,14 @@ function InvoiceItemEditableRow(props: InvoiceItemEditableRowProps) {
         })
     }, [invoiceItem, setInvoiceItem, props.item]);
 
+    const removeItem = useCallback(() => {
+        props.setInvoiceItems((prevState) => {
+            let copy = [...prevState];
+            delete copy[props.index];
+            return copy;
+        })
+    }, [invoiceItem, props.setInvoiceItems]);
+
     useEffect(() => {
         if (invoiceItem.archivalProduct){
             setPrice(countPrices(props.item))
@@ -92,9 +100,11 @@ function InvoiceItemEditableRow(props: InvoiceItemEditableRowProps) {
             <td>{price?.netPrice}</td>
             <td>{price?.brutPrice}</td>
             <td>
-                <button onClick={() => {}}>
-                    <Trash className="ml-2"/>
-                </button>
+                {invoiceItem.archivalProduct &&
+                    <button onClick={() => removeItem()}>
+                        <Trash className="ml-2"/>
+                    </button>
+                }
             </td>
         </tr>
     )
